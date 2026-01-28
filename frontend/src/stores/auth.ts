@@ -28,11 +28,10 @@ export const useAuthStore = defineStore('auth', () => {
     return user.value ? roles.includes(user.value.roleName) : false
   }
 
-  async function login(username: string, password: string) {
+  async function login(email: string, password: string) {
     try {
-      const response = await api.post('/auth/login', { username, password })
-      accessToken.value = response.data.access_token
-      refreshToken.value = response.data.refresh_token
+      const response = await api.post('/auth/login', { email, password })
+      accessToken.value = response.data.token
       user.value = response.data.user
       api.defaults.headers.common['Authorization'] = `Bearer ${accessToken.value}`
       return true

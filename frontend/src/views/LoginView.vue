@@ -7,27 +7,27 @@ const router = useRouter()
 const route = useRoute()
 const authStore = useAuthStore()
 
-const username = ref('')
+const email = ref('')
 const password = ref('')
 const isLoading = ref(false)
 const error = ref('')
 
 async function handleSubmit() {
-  if (!username.value || !password.value) {
-    error.value = 'لطفا نام کاربری و رمز عبور را وارد کنید'
+  if (!email.value || !password.value) {
+    error.value = 'لطفا ایمیل و رمز عبور را وارد کنید'
     return
   }
 
   isLoading.value = true
   error.value = ''
 
-  const success = await authStore.login(username.value, password.value)
+  const success = await authStore.login(email.value, password.value)
 
   if (success) {
     const redirect = route.query.redirect as string || '/'
     router.push(redirect)
   } else {
-    error.value = 'نام کاربری یا رمز عبور اشتباه است'
+    error.value = 'ایمیل یا رمز عبور اشتباه است'
   }
 
   isLoading.value = false
@@ -53,14 +53,14 @@ async function handleSubmit() {
           </div>
 
           <div class="form-group">
-            <label class="form-label">نام کاربری</label>
+            <label class="form-label">ایمیل</label>
             <div class="input-wrapper">
-              <i class="bi bi-person"></i>
+              <i class="bi bi-envelope"></i>
               <input
-                v-model="username"
-                type="text"
+                v-model="email"
+                type="email"
                 class="form-control"
-                placeholder="نام کاربری را وارد کنید"
+                placeholder="ایمیل را وارد کنید"
                 :disabled="isLoading"
               />
             </div>
