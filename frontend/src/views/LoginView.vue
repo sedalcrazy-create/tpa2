@@ -40,7 +40,7 @@ async function handleSubmit() {
       <div class="login-card">
         <div class="login-header">
           <div class="login-logo">
-            <img src="/tpa/logo.jpg" alt="TPA Logo" />
+            <img src="/logo.jpg" alt="TPA Logo" />
           </div>
           <h1>سامانه TPA</h1>
           <p>مدیریت اسناد درمانی</p>
