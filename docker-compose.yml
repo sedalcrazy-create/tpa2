@@ -1,0 +1,126 @@
+version: '3.8'
+
+services:
+  # TPA Backend API (Go) - Claims, Centers, Settlements, Drugs, Services
+  tpa-api:
+    image: tpa-api:latest
+    container_name: tpa-api
+    restart: unless-stopped
+    environment:
+      - APP_NAME=TPA System
+      - APP_ENV=production
+      - APP_PORT=8080
+      - APP_DEBUG=false
+      - APP_BASE_URL=https://ria.jafamhis.ir/tpa
+      - API_PREFIX=/api/v1
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+      - DB_NAME=${DB_NAME:-tpa}
+      - DB_SSLMODE=disable
+      - JWT_SECRET=${JWT_SECRET:-change-this-in-production}
+      - JWT_ACCESS_EXPIRES=1h
+      - JWT_REFRESH_EXPIRES=168h
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CORS_ORIGINS=https://ria.jafamhis.ir,http://localhost:5174
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - tpa-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Commission Backend API (NestJS) - Medical Commission, Social Work
+  commission-api:
+    image: tpa-commission-api:latest
+    container_name: tpa-commission-api
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - API_PREFIX=api/v1
+      - DB_TYPE=postgres
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+      - DB_NAME=${DB_NAME:-tpa}
+      - JWT_SECRET=${JWT_SECRET:-change-this-in-production}
+      - JWT_EXPIRATION=1h
+      - JWT_REFRESH_SECRET=${JWT_SECRET:-change-this-in-production}-refresh
+      - JWT_REFRESH_EXPIRATION=7d
+      - CORS_ORIGIN=https://ria.jafamhis.ir,http://localhost:5174
+    volumes:
+      - commission_uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - tpa-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # Frontend (Vue.js) - Unified UI for TPA + Commission + Social Work
+  frontend:
+    image: tpa-frontend:latest
+    container_name: tpa-frontend
+    restart: unless-stopped
+    ports:
+      - "8086:80"
+    depends_on:
+      - tpa-api
+      - commission-api
+    networks:
+      - tpa-network
+
+  # Database (PostgreSQL) - Shared by all modules
+  postgres:
+    image: postgres:16-alpine
+    container_name: tpa-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+      - POSTGRES_DB=${DB_NAME:-tpa}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - tpa-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-tpa}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis - Cache and Queue
+  redis:
+    image: redis:7-alpine
+    container_name: tpa-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - tpa-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  commission_uploads:
+
+networks:
+  tpa-network:
+    driver: bridge
