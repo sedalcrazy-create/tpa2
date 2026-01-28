@@ -40,7 +40,7 @@ async function handleSubmit() {
       <div class="login-card">
         <div class="login-header">
           <div class="login-logo">
-            <i class="bi bi-heart-pulse"></i>
+            <img src="/tpa/logo.jpg" alt="TPA Logo" />
           </div>
           <h1>سامانه TPA</h1>
           <p>مدیریت اسناد درمانی</p>
@@ -144,20 +144,18 @@ async function handleSubmit() {
 }
 
 .login-logo {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   margin: 0 auto 20px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
   border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.35);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-.login-logo i {
-  font-size: 2.5rem;
-  color: #fff;
+.login-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .login-header h1 {

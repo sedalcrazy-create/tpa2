@@ -88,7 +88,7 @@ async function handleLogout() {
     <nav class="sidebar">
       <div class="sidebar-brand">
         <div class="brand-logo">
-          <i class="bi bi-heart-pulse"></i>
+          <img src="/tpa/logo.jpg" alt="TPA Logo" />
         </div>
         <div class="brand-text">
           <div class="brand-title">سامانه TPA</div>

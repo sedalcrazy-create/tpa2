@@ -107,22 +107,18 @@ body {
 .brand-logo {
   width: 52px;
   height: 52px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 
-  &::after {
-    content: '';
-    position: absolute;
+  img {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.2) 100%);
+    object-fit: cover;
   }
 
   i {
