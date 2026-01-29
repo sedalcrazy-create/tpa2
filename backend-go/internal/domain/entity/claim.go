@@ -232,28 +232,6 @@ type ClaimItemReasonCode struct {
 	ReasonCode   *ReasonCode `gorm:"foreignKey:ReasonCodeID" json:"reason_code,omitempty"`
 }
 
-// PreAuth - پیش‌تایید (علی‌الحساب)
-type PreAuth struct {
-	TenantModel
-
-	PersonID uint   `gorm:"index" json:"person_id"`
-	Person   Person `gorm:"foreignKey:PersonID" json:"person,omitempty"`
-
-	Subject string `gorm:"size:500" json:"subject"` // موضوع
-
-	Amount  int64 `json:"amount"`   // مبلغ
-	Type    uint8 `json:"type"`     // نوع
-
-	PaymentDate *time.Time `json:"payment_date"`
-
-	RegisterUserID uint      `json:"register_user_id"`
-	RegisterDate   time.Time `json:"register_date"`
-
-	// ادعای مرتبط (constraint:false to avoid circular dependency with Claim.PreAuthID)
-	ClaimID *uint  `gorm:"index" json:"claim_id"`
-	Claim   *Claim `gorm:"-" json:"claim,omitempty"` // Loaded manually, no FK constraint
-}
-
 // Diagnosis - تشخیص (ICD)
 type Diagnosis struct {
 	BaseModel
