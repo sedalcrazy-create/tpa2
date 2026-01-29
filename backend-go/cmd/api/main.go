@@ -8,6 +8,7 @@ import (
 	"syscall"
 
 	"github.com/bank-melli/tpa/internal/config"
+	"github.com/bank-melli/tpa/internal/delivery/http/handler"
 	"github.com/bank-melli/tpa/internal/infrastructure/database"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
@@ -290,6 +291,33 @@ func setupProtectedRoutes(api fiber.Router, db *database.Database, cfg *config.C
 		members.Get("/:id/claims", func(c *fiber.Ctx) error {
 			return c.JSON(fiber.Map{"message": "member claims"})
 		})
+	}
+
+	// Employees - سیستم کارمندان (عین Yii)
+	employeeHandler := handler.NewEmployeeHandler()
+	importHandler := handler.NewEmployeeImportHandler()
+
+	employees := protected.Group("/employees")
+	{
+		// CRUD Operations
+		employees.Get("/", employeeHandler.GetEmployees)               // لیست کارمندان
+		employees.Get("/autocomplete", employeeHandler.AutoCompleteLookup) // جستجوی autocomplete
+		employees.Get("/:id", employeeHandler.GetEmployee)             // جزئیات کارمند
+		employees.Post("/", employeeHandler.CreateEmployee)            // ایجاد کارمند
+		employees.Put("/:id", employeeHandler.UpdateEmployee)          // ویرایش کارمند
+		employees.Delete("/:id", employeeHandler.DeleteEmployee)       // حذف کارمند
+
+		// Import & Sync Operations (عین Yii)
+		employees.Post("/upload", importHandler.UploadCSV)             // آپلود CSV
+		employees.Post("/process", importHandler.ProcessCSV)           // پردازش CSV
+		employees.Post("/import", importHandler.ImportEmployees)       // Import به جدول اصلی
+		employees.Post("/sync", importHandler.SyncFromHR)              // همگام‌سازی با HR
+		employees.Post("/validate", importHandler.ValidateCSV)         // اعتبارسنجی CSV
+
+		// Statistics & History
+		employees.Get("/stats", importHandler.GetEmployeeStats)         // آمار کارمندان
+		employees.Get("/import/history", importHandler.GetImportHistory) // تاریخچه import
+		employees.Get("/sample-csv", importHandler.DownloadSampleCSV)    // دانلود CSV نمونه
 	}
 
 	// Drugs

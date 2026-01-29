@@ -1,88 +1,77 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import axios from 'axios'
 
 interface Employee {
   id: number
-  personnelCode: string
-  nationalCode: string
-  firstName: string
-  lastName: string
-  parentId?: number
-  relationType?: string
-  isActive: boolean
+  personnel_code: string
+  national_code: string
+  first_name: string
+  last_name: string
+  parent_id?: number
+  relation_type?: string
+  is_active: boolean
   status: string
 }
 
+interface Stats {
+  total: number
+  active: number
+  family_members: number
+  retired: number
+}
+
 const employees = ref<Employee[]>([])
+const stats = ref<Stats>({
+  total: 0,
+  active: 0,
+  family_members: 0,
+  retired: 0
+})
 const searchTerm = ref('')
 const filterStatus = ref('all')
 const currentPage = ref(1)
 const itemsPerPage = 10
 const isLoading = ref(false)
 
-// Mock data
-const mockEmployees: Employee[] = [
-  {
-    id: 1,
-    personnelCode: '12345',
-    nationalCode: '1234567890',
-    firstName: 'علی',
-    lastName: 'احمدی',
-    isActive: true,
-    status: 'active'
-  },
-  {
-    id: 2,
-    personnelCode: '12346',
-    nationalCode: '1234567891',
-    firstName: 'فاطمه',
-    lastName: 'محمدی',
-    parentId: 1,
-    relationType: 'همسر',
-    isActive: true,
-    status: 'active'
-  },
-  {
-    id: 3,
-    personnelCode: '12347',
-    nationalCode: '1234567892',
-    firstName: 'محمد',
-    lastName: 'رضایی',
-    isActive: true,
-    status: 'active'
-  },
-  {
-    id: 4,
-    personnelCode: '12348',
-    nationalCode: '1234567893',
-    firstName: 'زهرا',
-    lastName: 'کریمی',
-    parentId: 3,
-    relationType: 'همسر',
-    isActive: true,
-    status: 'active'
-  },
-  {
-    id: 5,
-    personnelCode: '12349',
-    nationalCode: '1234567894',
-    firstName: 'حسین',
-    lastName: 'نوری',
-    isActive: false,
-    status: 'retired'
-  }
-]
+const API_BASE = '/api/v1'
 
 onMounted(() => {
   loadEmployees()
+  loadStats()
 })
 
-function loadEmployees() {
+async function loadEmployees() {
   isLoading.value = true
-  setTimeout(() => {
-    employees.value = mockEmployees
+  try {
+    const response = await axios.get(`${API_BASE}/employees`, {
+      params: {
+        search: searchTerm.value,
+        status: filterStatus.value,
+        page: currentPage.value,
+        limit: itemsPerPage
+      }
+    })
+
+    if (response.data.success) {
+      employees.value = response.data.data.employees || []
+    }
+  } catch (error) {
+    console.error('Error loading employees:', error)
+  } finally {
     isLoading.value = false
-  }, 500)
+  }
+}
+
+async function loadStats() {
+  try {
+    const response = await axios.get(`${API_BASE}/employees/stats`)
+    if (response.data.success) {
+      stats.value = response.data.data
+    }
+  } catch (error) {
+    console.error('Error loading stats:', error)
+  }
 }
 
 function getStatusBadgeClass(status: string): string {
