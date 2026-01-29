@@ -140,6 +140,11 @@ const router = createRouter({
           name: 'employee-sync',
           component: () => import('@/views/EmployeeSyncView.vue'),
           meta: { roles: ['system_admin', 'insurer_admin'] }
+        },
+        {
+          path: 'employees',
+          name: 'employees',
+          component: () => import('@/views/EmployeesView.vue')
         }
       ]
     },

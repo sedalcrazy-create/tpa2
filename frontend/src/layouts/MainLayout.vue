@@ -75,15 +75,14 @@ const menuItems = [
     { name: 'settlements', title: 'تسویه حساب', icon: '💰' }
   ]},
   { section: 'اطلاعات پایه', items: [
+    { name: 'employees', title: 'کارمندان', icon: '👥' },
     { name: 'price-conditions', title: 'شرایط قیمت‌گذاری', icon: '💰' },
     { name: 'insurance-rules', title: 'قوانین بیمه', icon: '🛡️' },
     { name: 'contracts', title: 'قراردادها', icon: '📄' },
-    { name: 'prescriptions', title: 'نسخه‌ها', icon: '💊' },
     { name: 'employee-sync', title: 'به‌روزرسانی کارمندان', icon: '🔄', roles: ['system_admin', 'insurer_admin'] }
   ]},
   { section: 'کمیسیون پزشکی', items: [
     { name: 'commission-cases', title: 'پرونده‌های کمیسیون', icon: '📋' },
-    { name: 'insured-persons', title: 'بیمه‌شدگان', icon: '👥' },
     { name: 'case-types', title: 'انواع پرونده', icon: '📑', roles: ['system_admin'] },
     { name: 'verdict-templates', title: 'قالب آرا', icon: '📝', roles: ['system_admin'] }
   ]},
