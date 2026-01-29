@@ -74,35 +74,21 @@ const menuItems = [
     { name: 'centers', title: 'مراکز درمانی', icon: 'bi-hospital' },
     { name: 'settlements', title: 'تسویه حساب', icon: 'bi-cash-stack' }
   ]},
-  { section: 'اطلاعات پایه - دارو و خدمات', items: [
+  { section: 'اطلاعات پایه', items: [
     { name: 'drugs', title: 'بانک دارویی', icon: 'bi-capsule' },
     { name: 'services', title: 'خدمات درمانی', icon: 'bi-hospital' },
-    { name: 'drug-prices', title: 'قیمت دارو', icon: 'bi-currency-dollar' },
-    { name: 'service-prices', title: 'قیمت خدمات', icon: 'bi-cash-coin' }
-  ]},
-  { section: 'اطلاعات پایه - مراکز', items: [
     { name: 'doctors', title: 'پزشکان', icon: 'bi-person-badge' },
-    { name: 'contracts', title: 'قراردادها', icon: 'bi-file-earmark-text' }
-  ]},
-  { section: 'اطلاعات پایه - قیمت‌گذاری', items: [
+    { name: 'employees', title: 'کارمندان', icon: 'bi-people' },
+    { name: 'insured-persons', title: 'بیمه‌شدگان', icon: 'bi-person-vcard' },
+    { name: 'diagnoses', title: 'تشخیص‌ها (ICD-10)', icon: 'bi-clipboard2-pulse' },
+    { name: 'provinces', title: 'استان‌ها', icon: 'bi-geo-alt' },
     { name: 'price-conditions', title: 'شرایط قیمت‌گذاری', icon: 'bi-calculator' },
     { name: 'insurance-rules', title: 'قوانین بیمه', icon: 'bi-shield-check' },
-    { name: 'tariffs', title: 'تعرفه‌ها', icon: 'bi-tag' }
-  ]},
-  { section: 'اطلاعات پایه - پرسنل', items: [
-    { name: 'employees', title: 'کارمندان', icon: 'bi-people' },
-    { name: 'employee-sync', title: 'به‌روزرسانی', icon: 'bi-arrow-repeat', roles: ['system_admin', 'insurer_admin'] }
-  ]},
-  { section: 'اطلاعات پایه - جغرافیایی', items: [
-    { name: 'provinces', title: 'استان‌ها', icon: 'bi-geo-alt' },
-    { name: 'cities', title: 'شهرها', icon: 'bi-pin-map' }
-  ]},
-  { section: 'اطلاعات پایه - پزشکی', items: [
-    { name: 'diagnoses', title: 'تشخیص‌ها', icon: 'bi-clipboard2-pulse' }
+    { name: 'contracts', title: 'قراردادها', icon: 'bi-file-earmark-text' },
+    { name: 'employee-sync', title: 'به‌روزرسانی کارمندان', icon: 'bi-arrow-repeat', roles: ['system_admin', 'insurer_admin'] }
   ]},
   { section: 'کمیسیون پزشکی', items: [
     { name: 'commission-cases', title: 'پرونده‌های کمیسیون', icon: 'bi-clipboard2-pulse' },
-    { name: 'insured-persons', title: 'بیمه‌شدگان', icon: 'bi-person-vcard' },
     { name: 'case-types', title: 'انواع پرونده', icon: 'bi-list-check', roles: ['system_admin'] },
     { name: 'verdict-templates', title: 'قالب آرا', icon: 'bi-file-earmark-text', roles: ['system_admin'] }
   ]},
@@ -110,8 +96,8 @@ const menuItems = [
     { name: 'social-work-list', title: 'پرونده‌های مددکاری', icon: 'bi-heart-pulse' },
     { name: 'social-work-create', title: 'ایجاد پرونده جدید', icon: 'bi-plus-circle' }
   ]},
-  { section: 'اطلاعات', items: [
-    { name: 'members', title: 'استعلام بیمه‌شده', icon: 'bi-people' },
+  { section: 'گزارشات', items: [
+    { name: 'members', title: 'استعلام بیمه‌شده', icon: 'bi-search' },
     { name: 'reports', title: 'گزارشات', icon: 'bi-bar-chart-line' }
   ]},
   { section: 'مدیریت', items: [
