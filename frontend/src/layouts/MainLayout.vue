@@ -26,6 +26,11 @@ const pageTitle = computed(() => {
     reports: 'گزارشات',
     users: 'مدیریت کاربران',
     settings: 'تنظیمات',
+    // Pricing & Rules
+    'price-conditions': 'شرایط قیمت‌گذاری',
+    'prescriptions': 'نسخه‌های پزشکی',
+    'insurance-rules': 'قوانین بیمه',
+    'contracts': 'قراردادها',
     // Commission
     'commission-cases': 'پرونده‌های کمیسیون',
     'commission-case-detail': 'جزئیات پرونده کمیسیون',
@@ -46,11 +51,17 @@ const menuItems = [
   ]},
   { section: 'عملیات اسناد', items: [
     { name: 'claims', title: 'ادعاهای درمانی', icon: 'bi-file-earmark-medical' },
+    { name: 'prescriptions', title: 'نسخه‌های پزشکی', icon: 'bi-prescription2' },
     { name: 'packages', title: 'بسته‌های اسناد', icon: 'bi-box-seam' }
   ]},
   { section: 'مراکز و مالی', items: [
     { name: 'centers', title: 'مراکز درمانی', icon: 'bi-hospital' },
     { name: 'settlements', title: 'تسویه حساب', icon: 'bi-cash-stack' }
+  ]},
+  { section: 'تعرفه و قوانین', items: [
+    { name: 'price-conditions', title: 'شرایط قیمت‌گذاری', icon: 'bi-calculator' },
+    { name: 'insurance-rules', title: 'قوانین بیمه', icon: 'bi-shield-check' },
+    { name: 'contracts', title: 'قراردادها', icon: 'bi-file-earmark-text' }
   ]},
   { section: 'کمیسیون پزشکی', items: [
     { name: 'commission-cases', title: 'پرونده‌های کمیسیون', icon: 'bi-clipboard2-pulse' },
