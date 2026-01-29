@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRD - ماژول TPA درمانی</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tahoma', 'Vazir', sans-serif;
+            line-height: 1.8;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        header .version {
+            margin-top: 15px;
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .toc {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+
+        .toc h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .toc ul {
+            list-style: none;
+            columns: 2;
+        }
+
+        .toc li {
+            padding: 8px 0;
+        }
+
+        .toc a {
+            color: #2a5298;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .toc a:hover {
+            color: #667eea;
+            padding-right: 10px;
+        }
+
+        section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: #fafbfc;
+            border-radius: 15px;
+            border-right: 5px solid #667eea;
+        }
+
+        section h2 {
+            color: #1e3c72;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        section h2 .icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+        }
+
+        h3 {
+            color: #2a5298;
+            margin: 25px 0 15px;
+            font-size: 1.3em;
+        }
+
+        h4 {
+            color: #4a5568;
+            margin: 20px 0 10px;
+        }
+
+        p {
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            margin: 15px 0 15px 30px;
+            color: #4a5568;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 15px;
+            text-align: right;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-right: 4px solid #f59e0b;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-right: 4px solid #10b981;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .feature-card h4 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .priority-high {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .priority-medium {
+            color: #f59e0b;
+            font-weight: bold;
+        }
+
+        .priority-low {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+        }
+
+        .status-mvp {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-phase2 {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-phase3 {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .diagram {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .diagram pre {
+            direction: ltr;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tech-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #1e3c72;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .toc ul {
+                columns: 1;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>سند نیازمندی‌های محصول (PRD)</h1>
+            <div class="subtitle">ماژول TPA درمانی - سامانه مدیریت خدمات درمانی شخص ثالث</div>
+            <div class="version">نسخه 1.0 | تاریخ: دی ۱۴۰۴</div>
+        </header>
+
+        <div class="content">
+            <!-- Table of Contents -->
+            <nav class="toc">
+                <h2>فهرست مطالب</h2>
+                <ul>
+                    <li><a href="#overview">۱. خلاصه اجرایی</a></li>
+                    <li><a href="#problem">۲. تعریف مسئله</a></li>
+                    <li><a href="#goals">۳. اهداف و شاخص‌های کلیدی</a></li>
+                    <li><a href="#users">۴. کاربران و نقش‌ها</a></li>
+                    <li><a href="#features">۵. ویژگی‌های محصول</a></li>
+                    <li><a href="#modules">۶. ماژول‌های سیستم</a></li>
+                    <li><a href="#workflow">۷. گردش کار اصلی</a></li>
+                    <li><a href="#technical">۸. معماری فنی</a></li>
+                    <li><a href="#integrations">۹. یکپارچه‌سازی‌ها</a></li>
+                    <li><a href="#security">۱۰. امنیت و انطباق</a></li>
+                    <li><a href="#nfr">۱۱. نیازمندی‌های غیرعملکردی</a></li>
+                    <li><a href="#roadmap">۱۲. نقشه راه</a></li>
+                    <li><a href="#risks">۱۳. ریسک‌ها</a></li>
+                    <li><a href="#scale">۱۴. تحلیل مقیاس و ظرفیت</a></li>
+                </ul>
+            </nav>
+
+            <!-- Section 1: Executive Summary -->
+            <section id="overview">
+                <h2><span class="icon">📋</span> ۱. خلاصه اجرایی</h2>
+
+                <div class="highlight-box">
+                    <p><strong>TPA (Third Party Administrator)</strong> یک سامانه جامع مدیریت خدمات درمانی است که به عنوان واسط بین بیمه‌گذار، بیمه‌شدگان و ارائه‌دهندگان خدمات درمانی (داروخانه‌ها، مراکز درمانی، پزشکان) عمل می‌کند.</p>
+                </div>
+
+                <h3>چشم‌انداز محصول</h3>
+                <p>ایجاد یک پلتفرم یکپارچه و هوشمند برای مدیریت تمامی فرآیندهای درمانی از لحظه صدور نسخه تا تسویه حساب نهایی، با تمرکز بر:</p>
+                <ul>
+                    <li>اتوماسیون کامل فرآیند ثبت و پردازش نسخ درمانی</li>
+                    <li>کنترل هوشمند تعهدات و سقف بیمه‌ای</li>
+                    <li>مدیریت قراردادها و تعرفه‌های پویا</li>
+                    <li>گزارش‌گیری جامع و داشبوردهای مدیریتی</li>
+                    <li>یکپارچه‌سازی با سامانه‌های بیمه‌ای و درمانی</li>
+                </ul>
+
+                <h3>مخاطبان اصلی</h3>
+                <ul>
+                    <li><strong>سازمان‌های بیمه‌گر:</strong> بیمه‌های تکمیلی، صندوق‌های بازنشستگی، شرکت‌های بیمه</li>
+                    <li><strong>بیمه‌شدگان:</strong> کارکنان سازمان‌ها و خانواده ایشان</li>
+                    <li><strong>ارائه‌دهندگان خدمات:</strong> داروخانه‌ها، مراکز درمانی، آزمایشگاه‌ها، پزشکان</li>
+                </ul>
+            </section>
+
+            <!-- Section 2: Problem Definition -->
+            <section id="problem">
+                <h2><span class="icon">❓</span> ۲. تعریف مسئله</h2>
+
+                <h3>چالش‌های موجود در سیستم‌های فعلی</h3>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>۱. فرآیندهای دستی</h4>
+                        <p>ثبت دستی نسخ، محاسبه سهم بیمه به صورت دستی، خطای انسانی بالا</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>۲. عدم کنترل لحظه‌ای</h4>
+                        <p>امکان سوءاستفاده، عدم کنترل سقف تعهدات، تکرار نسخ</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>۳. پراکندگی اطلاعات</h4>
+                        <p>عدم یکپارچگی داده‌ها، گزارش‌گیری دشوار، تحلیل ناکارآمد</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>۴. تسویه حساب پیچیده</h4>
+                        <p>فرآیند طولانی تسویه با مراکز درمانی، اختلافات مالی</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>مشکلات کد نمونه موجود (پروژه رفاه):</strong>
+                    <ul>
+                        <li>استفاده از فریم‌ورک منسوخ Yii 1.x (بدون پشتیبانی)</li>
+                        <li>آسیب‌پذیری‌های امنیتی جدی (استفاده از eval)</li>
+                        <li>کدهای Hardcoded برای احراز هویت API</li>
+                        <li>فاقد تست‌های خودکار</li>
+                        <li>معماری Monolithic با وابستگی بالا</li>
+                        <li>بدهی فنی انباشته شده</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 3: Goals -->
+            <section id="goals">
+                <h2><span class="icon">🎯</span> ۳. اهداف و شاخص‌های کلیدی</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>هدف</th>
+                            <th>شاخص (KPI)</th>
+                            <th>هدف عددی</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>کاهش زمان پردازش نسخ</td>
+                            <td>میانگین زمان ثبت نسخه</td>
+                            <td>کمتر از ۳۰ ثانیه</td>
+                        </tr>
+                        <tr>
+                            <td>کاهش خطای انسانی</td>
+                            <td>نرخ خطا در محاسبات</td>
+                            <td>کمتر از ۰.۱٪</td>
+                        </tr>
+                        <tr>
+                            <td>افزایش رضایت کاربران</td>
+                            <td>امتیاز NPS</td>
+                            <td>بالای ۷۰</td>
+                        </tr>
+                        <tr>
+                            <td>کنترل تقلب</td>
+                            <td>نرخ تشخیص تقلب</td>
+                            <td>بالای ۹۵٪</td>
+                        </tr>
+                        <tr>
+                            <td>تسریع تسویه حساب</td>
+                            <td>میانگین زمان تسویه</td>
+                            <td>کمتر از ۷۲ ساعت</td>
+                        </tr>
+                        <tr>
+                            <td>در دسترس‌پذیری</td>
+                            <td>Uptime سیستم</td>
+                            <td>۹۹.۹٪</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 4: Users -->
+            <section id="users">
+                <h2><span class="icon">👥</span> ۴. کاربران و نقش‌ها</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>نقش</th>
+                            <th>شرح</th>
+                            <th>دسترسی‌های کلیدی</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>مدیر سیستم</strong></td>
+                            <td>مدیریت کلی سامانه و تنظیمات</td>
+                            <td>تمامی ماژول‌ها، تنظیمات سیستم، مدیریت کاربران</td>
+                        </tr>
+                        <tr>
+                            <td><strong>کارشناس بیمه</strong></td>
+                            <td>مدیریت قراردادها و بیمه‌شدگان</td>
+                            <td>ثبت بیمه‌شده، مدیریت تعهدات، گزارش‌ها</td>
+                        </tr>
+                        <tr>
+                            <td><strong>اپراتور نسخه</strong></td>
+                            <td>ثبت و پردازش نسخ درمانی</td>
+                            <td>ثبت نسخه، استعلام، محاسبه سهم بیمه</td>
+                        </tr>
+                        <tr>
+                            <td><strong>داروخانه/مرکز درمانی</strong></td>
+                            <td>ارائه‌دهنده خدمات درمانی</td>
+                            <td>ثبت خدمات، مشاهده تسویه، گزارش عملکرد</td>
+                        </tr>
+                        <tr>
+                            <td><strong>کارشناس مالی</strong></td>
+                            <td>تسویه حساب و امور مالی</td>
+                            <td>صدور چک، تسویه، گزارش‌های مالی</td>
+                        </tr>
+                        <tr>
+                            <td><strong>مدیر ارشد</strong></td>
+                            <td>نظارت و تصمیم‌گیری</td>
+                            <td>داشبورد مدیریتی، گزارش‌های تحلیلی (فقط خواندن)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>بیمه‌شده</strong></td>
+                            <td>دریافت‌کننده خدمات</td>
+                            <td>مشاهده سوابق، مانده تعهدات (اپلیکیشن موبایل)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 5: Features -->
+            <section id="features">
+                <h2><span class="icon">⭐</span> ۵. ویژگی‌های محصول</h2>
+
+                <h3>ویژگی‌های اصلی</h3>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>ثبت نسخه آنلاین</h4>
+                        <span class="status-badge status-mvp">MVP</span>
+                        <p>ثبت لحظه‌ای نسخ درمانی با محاسبه خودکار سهم بیمه و بیمه‌شده</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>استعلام بیمه‌شده</h4>
+                        <span class="status-badge status-mvp">MVP</span>
+                        <p>بررسی وضعیت بیمه، سقف تعهدات و اعتبارسنجی آنلاین</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>مدیریت تعرفه‌ها</h4>
+                        <span class="status-badge status-mvp">MVP</span>
+                        <p>تعریف و مدیریت تعرفه‌های دارو، خدمات و تخفیفات</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>کنترل تعهدات</h4>
+                        <span class="status-badge status-mvp">MVP</span>
+                        <p>محاسبه و کنترل سقف تعهدات سالانه به تفکیک نوع خدمت</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>قوانین پیچیده قیمت‌گذاری</h4>
+                        <span class="status-badge status-phase2">فاز ۲</span>
+                        <p>اعمال شرایط خاص بر اساس بیماری، سن، نوع دارو و...</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>تشخیص تداخل دارویی</h4>
+                        <span class="status-badge status-phase2">فاز ۲</span>
+                        <p>هشدار خودکار تداخلات دارویی و منع مصرف‌ها</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>تسویه خودکار</h4>
+                        <span class="status-badge status-phase2">فاز ۲</span>
+                        <p>محاسبه و صدور خودکار اسناد تسویه با مراکز درمانی</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>داشبورد هوشمند</h4>
+                        <span class="status-badge status-mvp">MVP</span>
+                        <p>نمایش لحظه‌ای آمار، نمودارها و KPIها</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>اپلیکیشن موبایل</h4>
+                        <span class="status-badge status-phase3">فاز ۳</span>
+                        <p>دسترسی بیمه‌شدگان به سوابق و مانده تعهدات</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>هوش مصنوعی تشخیص تقلب</h4>
+                        <span class="status-badge status-phase3">فاز ۳</span>
+                        <p>تشخیص الگوهای مشکوک و سوءاستفاده</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Modules -->
+            <section id="modules">
+                <h2><span class="icon">📦</span> ۶. ماژول‌های سیستم</h2>
+
+                <h3>۱. ماژول مدیریت بیمه‌شدگان (Insured Management)</h3>
+                <ul>
+                    <li>ثبت و ویرایش اطلاعات بیمه‌شدگان</li>
+                    <li>مدیریت روابط خانوادگی (سرپرست، همسر، فرزندان)</li>
+                    <li>تاریخچه بیمه‌ای</li>
+                    <li>مدیریت بیماری‌های خاص و استثنائات</li>
+                    <li>ثبت تخلفات و محرومیت‌ها</li>
+                </ul>
+
+                <h3>۲. ماژول مدیریت قراردادها (Contract Management)</h3>
+                <ul>
+                    <li>تعریف قراردادهای بیمه‌ای</li>
+                    <li>مدیریت سقف تعهدات (کلی و به تفکیک خدمت)</li>
+                    <li>تنظیم درصد فرانشیز</li>
+                    <li>تعریف خدمات تحت پوشش</li>
+                    <li>مدیریت دوره‌های قرارداد</li>
+                </ul>
+
+                <h3>۳. ماژول نسخه‌نویسی (Prescription)</h3>
+                <ul>
+                    <li>ثبت نسخ دارویی</li>
+                    <li>ثبت نسخ پاراکلینیکی (آزمایشگاه، رادیولوژی)</li>
+                    <li>محاسبه خودکار سهم بیمه</li>
+                    <li>کنترل سقف و تعهدات</li>
+                    <li>تایید و رد نسخ</li>
+                </ul>
+
+                <h3>۴. ماژول تعرفه و قیمت‌گذاری (Pricing)</h3>
+                <ul>
+                    <li>بانک اطلاعاتی دارو (IRC، Generic، Brand)</li>
+                    <li>تعرفه خدمات درمانی</li>
+                    <li>قوانین قیمت‌گذاری شرطی</li>
+                    <li>مدیریت تخفیفات</li>
+                    <li>تاریخچه تغییرات قیمت</li>
+                </ul>
+
+                <h3>۵. ماژول مراکز درمانی (Healthcare Providers)</h3>
+                <ul>
+                    <li>ثبت داروخانه‌ها</li>
+                    <li>ثبت مراکز درمانی و آزمایشگاه‌ها</li>
+                    <li>مدیریت قراردادهای طرف قرارداد</li>
+                    <li>تعریف محدودیت‌های جغرافیایی</li>
+                    <li>مدیریت کارمزد و تخفیف اختصاصی</li>
+                </ul>
+
+                <h3>۶. ماژول مالی و تسویه (Finance)</h3>
+                <ul>
+                    <li>صورتحساب‌های دوره‌ای</li>
+                    <li>تسویه با مراکز درمانی</li>
+                    <li>صدور چک و اسناد مالی</li>
+                    <li>مغایرت‌گیری</li>
+                    <li>گزارش‌های مالی</li>
+                </ul>
+
+                <h3>۷. ماژول گزارش‌ها و داشبورد (Reports & Dashboard)</h3>
+                <ul>
+                    <li>داشبورد مدیریتی</li>
+                    <li>گزارش‌های آماری</li>
+                    <li>نمودارهای تحلیلی</li>
+                    <li>خروجی اکسل و PDF</li>
+                    <li>گزارش‌ساز پویا</li>
+                </ul>
+
+                <h3>۸. ماژول احراز هویت و دسترسی (Auth & RBAC)</h3>
+                <ul>
+                    <li>مدیریت کاربران</li>
+                    <li>نقش‌ها و مجوزها</li>
+                    <li>احراز هویت دو مرحله‌ای</li>
+                    <li>لاگ فعالیت‌ها</li>
+                    <li>مدیریت نشست‌ها</li>
+                </ul>
+            </section>
+
+            <!-- Section 7: Workflow -->
+            <section id="workflow">
+                <h2><span class="icon">🔄</span> ۷. گردش کار اصلی</h2>
+
+                <div class="diagram">
+                    <h4>فرآیند ثبت نسخه</h4>
+                    <pre>
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           گردش کار ثبت نسخه                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
+  │  شروع   │───▶│ استعلام  │───▶│ ثبت نسخه │───▶│ محاسبه  │───▶│  تایید   │
+  │          │    │ بیمه‌شده │    │          │    │ سهم بیمه │    │          │
+  └──────────┘    └──────────┘    └──────────┘    └──────────┘    └──────────┘
+                       │                               │               │
+                       ▼                               ▼               ▼
+                 ┌──────────┐                   ┌──────────┐    ┌──────────┐
+                 │ بررسی   │                   │ کنترل   │    │ ذخیره در│
+                 │ اعتبار  │                   │ سقف     │    │ دیتابیس │
+                 └──────────┘                   └──────────┘    └──────────┘
+                       │                               │               │
+            ┌──────────┴──────────┐         ┌─────────┴────────┐      │
+            ▼                     ▼         ▼                  ▼      │
+      ┌──────────┐          ┌──────────┐ ┌──────────┐    ┌──────────┐ │
+      │ معتبر   │          │ نامعتبر │ │ در سقف  │    │ بیش از   │ │
+      │          │          │ (خطا)   │ │          │    │ سقف     │ │
+      └──────────┘          └──────────┘ └──────────┘    └──────────┘ │
+                                                              │       │
+                                                              ▼       │
+                                                        ┌──────────┐  │
+                                                        │ محاسبه  │  │
+                                                        │ مازاد   │  │
+                                                        └──────────┘  │
+                                                              │       │
+                                                              └───────┘
+                                                                   │
+                                                                   ▼
+                                                            ┌──────────┐
+                                                            │ صدور    │
+                                                            │ رسید    │
+                                                            └──────────┘
+                    </pre>
+                </div>
+
+                <div class="diagram">
+                    <h4>فرآیند تسویه حساب</h4>
+                    <pre>
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         گردش کار تسویه حساب                                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
+  │ پایان   │───▶│ تجمیع   │───▶│ بررسی   │───▶│ تایید   │───▶│ صدور    │
+  │ دوره    │    │ فاکتورها│    │ مغایرت  │    │ مالی    │    │ چک      │
+  └──────────┘    └──────────┘    └──────────┘    └──────────┘    └──────────┘
+                                       │
+                                       ▼
+                                 ┌──────────┐
+                                 │ رفع     │
+                                 │ مغایرت  │
+                                 └──────────┘
+                    </pre>
+                </div>
+            </section>
+
+            <!-- Section 8: Technical Architecture -->
+            <section id="technical">
+                <h2><span class="icon">🏗️</span> ۸. معماری فنی</h2>
+
+                <div class="success-box">
+                    <strong>توصیه: بازنویسی کامل با تکنولوژی‌های مدرن</strong>
+                    <p>با توجه به مشکلات جدی پروژه نمونه (Yii 1.x)، پیشنهاد می‌شود از استک فعلی سامانه کمیسیون پزشکی استفاده شود.</p>
+                </div>
+
+                <h3>استک تکنولوژی پیشنهادی</h3>
+                <div class="tech-stack">
+                    <span class="tech-item">Vue.js 3</span>
+                    <span class="tech-item">TypeScript</span>
+                    <span class="tech-item">PrimeVue 4</span>
+                    <span class="tech-item">Pinia</span>
+                    <span class="tech-item">NestJS</span>
+                    <span class="tech-item">TypeORM</span>
+                    <span class="tech-item">PostgreSQL</span>
+                    <span class="tech-item">Redis</span>
+                    <span class="tech-item">Docker</span>
+                </div>
+
+                <div class="diagram">
+                    <h4>معماری سیستم</h4>
+                    <pre>
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              معماری سه‌لایه                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+                    ┌─────────────────────────────────────┐
+                    │         Frontend Layer              │
+                    │   Vue 3 + PrimeVue + TypeScript    │
+                    │   ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐  │
+                    │   │Views│ │Store│ │Route│ │Comp │  │
+                    │   └─────┘ └─────┘ └─────┘ └─────┘  │
+                    └──────────────────┬──────────────────┘
+                                       │ REST API
+                                       ▼
+                    ┌─────────────────────────────────────┐
+                    │         Backend Layer               │
+                    │      NestJS + TypeORM              │
+                    │   ┌──────┐ ┌──────┐ ┌──────┐       │
+                    │   │Module│ │Guard │ │Pipe  │       │
+                    │   └──────┘ └──────┘ └──────┘       │
+                    │   ┌──────┐ ┌──────┐ ┌──────┐       │
+                    │   │Service│ │DTO  │ │Entity│       │
+                    │   └──────┘ └──────┘ └──────┘       │
+                    └──────────────────┬──────────────────┘
+                                       │ TypeORM
+                                       ▼
+                    ┌─────────────────────────────────────┐
+                    │         Database Layer              │
+                    │     PostgreSQL + Redis             │
+                    │   ┌──────────┐  ┌──────────┐       │
+                    │   │PostgreSQL│  │  Redis   │       │
+                    │   │ (Data)   │  │ (Cache)  │       │
+                    │   └──────────┘  └──────────┘       │
+                    └─────────────────────────────────────┘
+                    </pre>
+                </div>
+
+                <h3>ساختار دیتابیس (جداول اصلی)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>جدول</th>
+                            <th>شرح</th>
+                            <th>روابط کلیدی</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>employees</td>
+                            <td>بیمه‌شدگان اصلی</td>
+                            <td>insurance, prescriptions</td>
+                        </tr>
+                        <tr>
+                            <td>dependents</td>
+                            <td>افراد تحت تکفل</td>
+                            <td>employees (FK)</td>
+                        </tr>
+                        <tr>
+                            <td>insurances</td>
+                            <td>اطلاعات بیمه‌ای</td>
+                            <td>employees, contracts</td>
+                        </tr>
+                        <tr>
+                            <td>contracts</td>
+                            <td>قراردادهای بیمه</td>
+                            <td>organizations, coverages</td>
+                        </tr>
+                        <tr>
+                            <td>prescriptions</td>
+                            <td>نسخ درمانی</td>
+                            <td>employees, pharmacies, items</td>
+                        </tr>
+                        <tr>
+                            <td>prescription_items</td>
+                            <td>اقلام نسخه</td>
+                            <td>prescriptions, items</td>
+                        </tr>
+                        <tr>
+                            <td>items</td>
+                            <td>بانک دارو/خدمات</td>
+                            <td>categories, prices</td>
+                        </tr>
+                        <tr>
+                            <td>item_prices</td>
+                            <td>قیمت اقلام</td>
+                            <td>items</td>
+                        </tr>
+                        <tr>
+                            <td>pharmacies</td>
+                            <td>داروخانه‌ها</td>
+                            <td>prescriptions, locations</td>
+                        </tr>
+                        <tr>
+                            <td>invoices</td>
+                            <td>صورتحساب‌ها</td>
+                            <td>pharmacies, prescriptions</td>
+                        </tr>
+                        <tr>
+                            <td>settlements</td>
+                            <td>تسویه‌حساب‌ها</td>
+                            <td>invoices, pharmacies</td>
+                        </tr>
+                        <tr>
+                            <td>pricing_rules</td>
+                            <td>قوانین قیمت‌گذاری</td>
+                            <td>items, categories, conditions</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 9: Integrations -->
+            <section id="integrations">
+                <h2><span class="icon">🔗</span> ۹. یکپارچه‌سازی‌ها</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>سیستم خارجی</th>
+                            <th>نوع ارتباط</th>
+                            <th>کاربرد</th>
+                            <th>اولویت</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>سامانه ثبت احوال</td>
+                            <td>REST API</td>
+                            <td>استعلام کد ملی و اطلاعات هویتی</td>
+                            <td class="priority-high">بالا</td>
+                        </tr>
+                        <tr>
+                            <td>سامانه IRC (دارو)</td>
+                            <td>SOAP/REST</td>
+                            <td>استعلام قیمت و اطلاعات دارو</td>
+                            <td class="priority-high">بالا</td>
+                        </tr>
+                        <tr>
+                            <td>بیمه مرکزی</td>
+                            <td>REST API</td>
+                            <td>استعلام بیمه پایه</td>
+                            <td class="priority-medium">متوسط</td>
+                        </tr>
+                        <tr>
+                            <td>سامانه پیامک</td>
+                            <td>REST API</td>
+                            <td>ارسال اعلان‌ها</td>
+                            <td class="priority-medium">متوسط</td>
+                        </tr>
+                        <tr>
+                            <td>درگاه بانکی</td>
+                            <td>REST API</td>
+                            <td>پرداخت آنلاین</td>
+                            <td class="priority-low">پایین</td>
+                        </tr>
+                        <tr>
+                            <td>سامانه مالیاتی</td>
+                            <td>REST API</td>
+                            <td>ثبت فاکتور الکترونیکی</td>
+                            <td class="priority-low">پایین</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 10: Security -->
+            <section id="security">
+                <h2><span class="icon">🔒</span> ۱۰. امنیت و انطباق</h2>
+
+                <h3>استانداردها</h3>
+                <ul>
+                    <li><strong>ISO 27001:</strong> مدیریت امنیت اطلاعات</li>
+                    <li><strong>OWASP Top 10:</strong> جلوگیری از آسیب‌پذیری‌های رایج</li>
+                    <li><strong>قانون حفاظت از داده‌های شخصی:</strong> انطباق با مقررات ایران</li>
+                </ul>
+
+                <h3>الزامات امنیتی</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>حوزه</th>
+                            <th>الزام</th>
+                            <th>پیاده‌سازی</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>احراز هویت</td>
+                            <td>MFA اجباری برای کاربران حساس</td>
+                            <td>TOTP، SMS OTP</td>
+                        </tr>
+                        <tr>
+                            <td>مجوزدهی</td>
+                            <td>RBAC با حداقل دسترسی</td>
+                            <td>Guard های NestJS</td>
+                        </tr>
+                        <tr>
+                            <td>رمزنگاری</td>
+                            <td>داده‌های حساس رمزنگاری شوند</td>
+                            <td>AES-256، bcrypt</td>
+                        </tr>
+                        <tr>
+                            <td>انتقال</td>
+                            <td>TLS 1.3 اجباری</td>
+                            <td>HTTPS، Certificate Pinning</td>
+                        </tr>
+                        <tr>
+                            <td>لاگ‌گیری</td>
+                            <td>ثبت تمام عملیات حساس</td>
+                            <td>Audit Trail Module</td>
+                        </tr>
+                        <tr>
+                            <td>ورودی</td>
+                            <td>اعتبارسنجی تمام ورودی‌ها</td>
+                            <td>class-validator، DTOs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 11: Non-Functional Requirements -->
+            <section id="nfr">
+                <h2><span class="icon">📊</span> ۱۱. نیازمندی‌های غیرعملکردی</h2>
+
+                <div class="warning-box" style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-right-color: #dc2626;">
+                    <h3>اعداد واقعی مقیاس سیستم (Critical Scale)</h3>
+                    <table style="margin: 15px 0; box-shadow: none;">
+                        <tr><td style="width: 50%;"><strong>تعداد پرسنل (بیمه‌شدگان):</strong></td><td><strong style="color: #dc2626; font-size: 1.2em;">۲۰۰,۰۰۰ نفر</strong></td></tr>
+                        <tr><td><strong>اسناد درمانی سالانه:</strong></td><td><strong style="color: #dc2626; font-size: 1.2em;">۵,۰۰۰,۰۰۰ سند</strong> (بستری + سرپایی)</td></tr>
+                        <tr><td><strong>مراکز درمانی طرف قرارداد:</strong></td><td><strong style="color: #dc2626; font-size: 1.2em;">۱۵,۰۰۰ مرکز</strong></td></tr>
+                    </table>
+                </div>
+
+                <h3>تحلیل بار سیستم</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>معیار</th>
+                            <th>محاسبه</th>
+                            <th>مقدار</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>اسناد روزانه (میانگین)</td>
+                            <td>5M / 300 روز کاری</td>
+                            <td><strong style="color: #dc2626;">~۱۶,۷۰۰ سند/روز</strong></td>
+                        </tr>
+                        <tr>
+                            <td>اسناد در ساعت (8 ساعت کاری)</td>
+                            <td>16,700 / 8</td>
+                            <td><strong style="color: #dc2626;">~۲,۱۰۰ سند/ساعت</strong></td>
+                        </tr>
+                        <tr>
+                            <td>اسناد در دقیقه (Peak با ضریب 3x)</td>
+                            <td>(2,100/60) × 3</td>
+                            <td><strong style="color: #dc2626;">~۱۰۵ سند/دقیقه</strong></td>
+                        </tr>
+                        <tr>
+                            <td>میانگین سند به ازای هر بیمه‌شده</td>
+                            <td>5M / 200K</td>
+                            <td><strong>۲۵ سند/نفر/سال</strong></td>
+                        </tr>
+                        <tr>
+                            <td>میانگین سند به ازای هر مرکز</td>
+                            <td>5M / 15K</td>
+                            <td><strong>~۳۳۳ سند/مرکز/سال</strong></td>
+                        </tr>
+                        <tr>
+                            <td>کاربران همزمان فعال (تخمین 3%)</td>
+                            <td>15,000 × 3%</td>
+                            <td><strong style="color: #dc2626;">~۴۵۰ کاربر همزمان</strong></td>
+                        </tr>
+                        <tr>
+                            <td>حجم دیتابیس (5 سال)</td>
+                            <td>25M رکورد × ~3KB</td>
+                            <td><strong>~۷۵ GB (بدون فایل‌ها)</strong></td>
+                        </tr>
+                        <tr>
+                            <td>حجم با فایل‌های ضمیمه (5 سال)</td>
+                            <td>اسناد اسکن + تصاویر</td>
+                            <td><strong style="color: #dc2626;">~۵۰۰ GB - ۱ TB</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>نیازمندی‌های عملکردی</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ویژگی</th>
+                            <th>نیازمندی</th>
+                            <th>معیار سنجش</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>کارایی</strong></td>
+                            <td>پاسخ‌دهی سریع</td>
+                            <td>زمان پاسخ < 500ms (P95)، < 2s (P99)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>مقیاس‌پذیری</strong></td>
+                            <td>پشتیبانی از بار واقعی</td>
+                            <td><strong>500+ کاربر همزمان، 5M سند/سال</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Throughput</strong></td>
+                            <td>پردازش در زمان Peak</td>
+                            <td><strong>150+ تراکنش/ثانیه</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>در دسترس‌پذیری</strong></td>
+                            <td>سرویس‌دهی مداوم</td>
+                            <td>99.9% Uptime = 8.7h downtime/year</td>
+                        </tr>
+                        <tr>
+                            <td><strong>قابلیت نگهداری</strong></td>
+                            <td>کد تمیز و مستند</td>
+                            <td>Code Coverage > 80%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>قابلیت استقرار</strong></td>
+                            <td>CI/CD خودکار</td>
+                            <td>Zero-downtime، Blue-Green Deployment</td>
+                        </tr>
+                        <tr>
+                            <td><strong>پشتیبان‌گیری</strong></td>
+                            <td>بازیابی از فاجعه</td>
+                            <td>RPO < 15min، RTO < 1h</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Retention</strong></td>
+                            <td>نگهداری اسناد قانونی</td>
+                            <td>حداقل ۱۰ سال (۵۰M+ رکورد)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 12: Roadmap -->
+            <section id="roadmap">
+                <h2><span class="icon">🗺️</span> ۱۲. نقشه راه</h2>
+
+                <h3>فاز ۱ - MVP</h3>
+                <div class="highlight-box">
+                    <ul>
+                        <li>مدیریت کاربران و RBAC</li>
+                        <li>ثبت بیمه‌شدگان و افراد تحت تکفل</li>
+                        <li>بانک اطلاعاتی دارو و خدمات</li>
+                        <li>ثبت نسخه ساده (بدون قوانین پیچیده)</li>
+                        <li>محاسبه سهم بیمه (درصد ثابت)</li>
+                        <li>داشبورد پایه</li>
+                        <li>گزارش‌های اولیه</li>
+                    </ul>
+                </div>
+
+                <h3>فاز ۲ - توسعه</h3>
+                <div class="highlight-box">
+                    <ul>
+                        <li>قوانین پیچیده قیمت‌گذاری (شرطی)</li>
+                        <li>کنترل سقف تعهدات به تفکیک خدمت</li>
+                        <li>تشخیص تداخل دارویی</li>
+                        <li>ماژول مالی و تسویه حساب</li>
+                        <li>یکپارچه‌سازی با سامانه‌های خارجی</li>
+                        <li>گزارش‌ساز پویا</li>
+                    </ul>
+                </div>
+
+                <h3>فاز ۳ - بهینه‌سازی</h3>
+                <div class="highlight-box">
+                    <ul>
+                        <li>اپلیکیشن موبایل بیمه‌شدگان</li>
+                        <li>هوش مصنوعی تشخیص تقلب</li>
+                        <li>API عمومی برای مراکز درمانی</li>
+                        <li>داشبورد پیشرفته با BI</li>
+                        <li>امضای دیجیتال</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 13: Risks -->
+            <section id="risks">
+                <h2><span class="icon">⚠️</span> ۱۳. ریسک‌ها و راهکارها</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ریسک</th>
+                            <th>احتمال</th>
+                            <th>تاثیر</th>
+                            <th>راهکار</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>پیچیدگی قوانین قیمت‌گذاری</td>
+                            <td class="priority-high">بالا</td>
+                            <td class="priority-high">بالا</td>
+                            <td>طراحی موتور قوانین انعطاف‌پذیر از ابتدا</td>
+                        </tr>
+                        <tr>
+                            <td>مقاومت کاربران در برابر تغییر</td>
+                            <td class="priority-medium">متوسط</td>
+                            <td class="priority-medium">متوسط</td>
+                            <td>آموزش تدریجی، UI ساده و آشنا</td>
+                        </tr>
+                        <tr>
+                            <td>یکپارچه‌سازی با سیستم‌های legacy</td>
+                            <td class="priority-high">بالا</td>
+                            <td class="priority-medium">متوسط</td>
+                            <td>طراحی Adapter Pattern، تست‌های integration</td>
+                        </tr>
+                        <tr>
+                            <td>حجم بالای داده</td>
+                            <td class="priority-medium">متوسط</td>
+                            <td class="priority-high">بالا</td>
+                            <td>ایندکس‌گذاری مناسب، کش، Partitioning</td>
+                        </tr>
+                        <tr>
+                            <td>تغییرات مقررات بیمه‌ای</td>
+                            <td class="priority-high">بالا</td>
+                            <td class="priority-medium">متوسط</td>
+                            <td>معماری ماژولار، قابلیت پیکربندی بالا</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 14: Scale Analysis -->
+            <section id="scale" style="border-right-color: #dc2626;">
+                <h2><span class="icon">📈</span> ۱۴. تحلیل مقیاس و معماری مورد نیاز</h2>
+
+                <div class="warning-box" style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-right-color: #dc2626;">
+                    <h3>هشدار: این یک سیستم Enterprise-Scale است!</h3>
+                    <p>با توجه به اعداد واقعی (200K کاربر، 5M سند، 15K مرکز)، این سیستم نیاز به معماری Enterprise-Grade دارد و نمی‌توان با یک سرور ساده آن را اجرا کرد.</p>
+                </div>
+
+                <h3>معماری پیشنهادی برای این مقیاس</h3>
+
+                <div class="diagram">
+                    <h4>High-Availability Architecture</h4>
+                    <pre>
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                        معماری توزیع‌شده برای 5M سند سالانه                            │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+
+                              ┌─────────────────┐
+                              │   CDN (Static)  │
+                              │  Images, Assets │
+                              └────────┬────────┘
+                                       │
+                              ┌────────▼────────┐
+                              │  Load Balancer  │
+                              │  (Nginx/HAProxy)│
+                              └────────┬────────┘
+                                       │
+              ┌────────────────────────┼────────────────────────┐
+              │                        │                        │
+     ┌────────▼────────┐     ┌────────▼────────┐     ┌────────▼────────┐
+     │  API Server 1   │     │  API Server 2   │     │  API Server N   │
+     │    (NestJS)     │     │    (NestJS)     │     │    (NestJS)     │
+     └────────┬────────┘     └────────┬────────┘     └────────┬────────┘
+              │                        │                        │
+              └────────────────────────┼────────────────────────┘
+                                       │
+                    ┌──────────────────┼──────────────────┐
+                    │                  │                  │
+           ┌────────▼────────┐ ┌───────▼───────┐ ┌───────▼───────┐
+           │     Redis       │ │  Message Queue │ │ File Storage  │
+           │   (Cache +      │ │  (BullMQ/      │ │ (MinIO/S3)    │
+           │    Sessions)    │ │   RabbitMQ)    │ │               │
+           └─────────────────┘ └───────────────┘ └───────────────┘
+                    │
+     ┌──────────────┼──────────────┐
+     │              │              │
+┌────▼────┐  ┌─────▼─────┐  ┌─────▼─────┐
+│ Primary │  │  Replica  │  │  Replica  │
+│PostgreSQL│  │PostgreSQL │  │PostgreSQL │
+│ (Write) │  │  (Read)   │  │  (Read)   │
+└─────────┘  └───────────┘  └───────────┘
+                    </pre>
+                </div>
+
+                <h3>اجزای ضروری معماری</h3>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>1. Load Balancer</h4>
+                        <span class="status-badge status-mvp">الزامی</span>
+                        <ul>
+                            <li>توزیع بار بین سرورها</li>
+                            <li>Health check خودکار</li>
+                            <li>SSL termination</li>
+                            <li>Rate limiting</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>2. Redis Cluster</h4>
+                        <span class="status-badge status-mvp">الزامی</span>
+                        <ul>
+                            <li>Session management</li>
+                            <li>کش داده‌های پرتکرار</li>
+                            <li>Rate limiting</li>
+                            <li>Real-time counters</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>3. Message Queue</h4>
+                        <span class="status-badge status-mvp">الزامی</span>
+                        <ul>
+                            <li>پردازش async نسخه‌ها</li>
+                            <li>ارسال پیامک/ایمیل</li>
+                            <li>گزارش‌گیری Background</li>
+                            <li>Retry mechanism</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>4. Database Replication</h4>
+                        <span class="status-badge status-mvp">الزامی</span>
+                        <ul>
+                            <li>Primary-Replica setup</li>
+                            <li>Read replicas برای گزارش</li>
+                            <li>Point-in-time recovery</li>
+                            <li>Streaming replication</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>5. Object Storage</h4>
+                        <span class="status-badge status-phase2">فاز ۲</span>
+                        <ul>
+                            <li>ذخیره اسناد اسکن شده</li>
+                            <li>تصاویر نسخ</li>
+                            <li>فایل‌های ضمیمه</li>
+                            <li>Versioning</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>6. Monitoring Stack</h4>
+                        <span class="status-badge status-mvp">الزامی</span>
+                        <ul>
+                            <li>Prometheus + Grafana</li>
+                            <li>ELK Stack (Logs)</li>
+                            <li>APM (Application Monitoring)</li>
+                            <li>Alerting</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>استراتژی‌های بهینه‌سازی دیتابیس</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>استراتژی</th>
+                            <th>کاربرد</th>
+                            <th>اولویت</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Table Partitioning</strong></td>
+                            <td>پارتیشن جدول prescriptions بر اساس تاریخ (ماهانه/سالانه)</td>
+                            <td class="priority-high">بالا</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Composite Indexes</strong></td>
+                            <td>ایندکس‌های ترکیبی برای کوئری‌های پرتکرار</td>
+                            <td class="priority-high">بالا</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Materialized Views</strong></td>
+                            <td>برای داشبورد و گزارش‌های تجمیعی</td>
+                            <td class="priority-medium">متوسط</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Connection Pooling</strong></td>
+                            <td>PgBouncer برای مدیریت connection ها</td>
+                            <td class="priority-high">بالا</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Query Optimization</strong></td>
+                            <td>EXPLAIN ANALYZE، بهینه‌سازی slow queries</td>
+                            <td class="priority-high">بالا</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Archiving</strong></td>
+                            <td>انتقال داده‌های قدیمی به جداول آرشیو</td>
+                            <td class="priority-medium">متوسط</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>تخمین منابع سخت‌افزاری</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>سرور</th>
+                            <th>تعداد</th>
+                            <th>مشخصات پیشنهادی</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>API Servers</strong></td>
+                            <td>3+</td>
+                            <td>8 Core، 16GB RAM، 100GB SSD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Database Primary</strong></td>
+                            <td>1</td>
+                            <td>16 Core، 64GB RAM، 1TB NVMe SSD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Database Replicas</strong></td>
+                            <td>2+</td>
+                            <td>8 Core، 32GB RAM، 1TB SSD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Redis Cluster</strong></td>
+                            <td>3</td>
+                            <td>4 Core، 16GB RAM، 50GB SSD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Message Queue</strong></td>
+                            <td>2</td>
+                            <td>4 Core، 8GB RAM، 100GB SSD</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Load Balancer</strong></td>
+                            <td>2</td>
+                            <td>2 Core، 4GB RAM</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Object Storage</strong></td>
+                            <td>Cluster</td>
+                            <td>2TB+ expandable</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="success-box">
+                    <h3>گزینه جایگزین: Cloud Infrastructure</h3>
+                    <p>به جای سرورهای فیزیکی، می‌توان از سرویس‌های ابری استفاده کرد:</p>
+                    <ul>
+                        <li><strong>ایران:</strong> ابرآروان، ابرافلاک، پارس‌پک</li>
+                        <li><strong>بین‌المللی:</strong> AWS، Azure، GCP (با محدودیت‌های تحریم)</li>
+                    </ul>
+                    <p>مزایا: Auto-scaling، Managed services، کاهش هزینه عملیاتی</p>
+                </div>
+            </section>
+
+            <!-- Tech Recommendation -->
+            <section id="tech-recommendation" style="border-right-color: #10b981;">
+                <h2><span class="icon">💡</span> توصیه فنی: آیا نیاز به تغییر بکند و فرانت هست؟</h2>
+
+                <div class="success-box">
+                    <h3>پاسخ کوتاه: بله، قطعاً</h3>
+                </div>
+
+                <h3>دلایل تغییر بکند (از Yii 1.x به NestJS):</h3>
+                <ol>
+                    <li><strong>Yii 1.x منسوخ شده:</strong> آخرین آپدیت امنیتی در 2020 - بدون پشتیبانی</li>
+                    <li><strong>آسیب‌پذیری‌های امنیتی:</strong> استفاده از eval() در کد موجود - غیرقابل قبول</li>
+                    <li><strong>PHP قدیمی:</strong> نیاز به PHP 7+ و کتابخانه‌های مدرن</li>
+                    <li><strong>فاقد تست:</strong> هیچ تست خودکاری وجود ندارد</li>
+                    <li><strong>معماری Monolithic:</strong> توسعه و نگهداری دشوار</li>
+                    <li><strong>TypeScript:</strong> Type safety و developer experience بهتر</li>
+                </ol>
+
+                <h3>دلایل تغییر فرانت (به Vue 3 + PrimeVue):</h3>
+                <ol>
+                    <li><strong>jQuery قدیمی:</strong> مدیریت state پیچیده و error-prone</li>
+                    <li><strong>Bootstrap قدیمی:</strong> کامپوننت‌های محدود</li>
+                    <li><strong>عدم یکپارچگی:</strong> با سامانه کمیسیون پزشکی موجود</li>
+                    <li><strong>RTL نامناسب:</strong> نیاز به پشتیبانی بهتر فارسی</li>
+                </ol>
+
+                <div class="warning-box">
+                    <h3>توصیه نهایی</h3>
+                    <p>از همان استک سامانه کمیسیون پزشکی استفاده کنید (Vue 3 + NestJS + PostgreSQL). این کار:</p>
+                    <ul>
+                        <li>یکپارچگی دو سامانه را تضمین می‌کند</li>
+                        <li>هزینه نگهداری را کاهش می‌دهد</li>
+                        <li>امکان اشتراک‌گذاری کد و ماژول‌ها را فراهم می‌کند</li>
+                        <li>تیم توسعه یکسانی می‌تواند روی هر دو کار کند</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>سند نیازمندی‌های محصول - ماژول TPA درمانی</p>
+            <p>تهیه شده: دی ۱۴۰۴</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -40,7 +40,9 @@ const pageTitle = computed(() => {
     // Social Work
     'social-work-list': 'پرونده‌های مددکاری',
     'social-work-create': 'ایجاد پرونده مددکاری',
-    'social-work-detail': 'جزئیات پرونده مددکاری'
+    'social-work-detail': 'جزئیات پرونده مددکاری',
+    // Base Data
+    'employee-sync': 'به‌روزرسانی کارمندان'
   }
   return titles[route.name as string] || 'داشبورد'
 })
@@ -51,17 +53,18 @@ const menuItems = [
   ]},
   { section: 'عملیات اسناد', items: [
     { name: 'claims', title: 'ادعاهای درمانی', icon: 'bi-file-earmark-medical' },
-    { name: 'prescriptions', title: 'نسخه‌های پزشکی', icon: 'bi-prescription2' },
     { name: 'packages', title: 'بسته‌های اسناد', icon: 'bi-box-seam' }
   ]},
   { section: 'مراکز و مالی', items: [
     { name: 'centers', title: 'مراکز درمانی', icon: 'bi-hospital' },
     { name: 'settlements', title: 'تسویه حساب', icon: 'bi-cash-stack' }
   ]},
-  { section: 'تعرفه و قوانین', items: [
+  { section: 'اطلاعات پایه', items: [
     { name: 'price-conditions', title: 'شرایط قیمت‌گذاری', icon: 'bi-calculator' },
     { name: 'insurance-rules', title: 'قوانین بیمه', icon: 'bi-shield-check' },
-    { name: 'contracts', title: 'قراردادها', icon: 'bi-file-earmark-text' }
+    { name: 'contracts', title: 'قراردادها', icon: 'bi-file-earmark-text' },
+    { name: 'prescriptions', title: 'نسخه‌های پزشکی', icon: 'bi-prescription2' },
+    { name: 'employee-sync', title: 'به‌روزرسانی کارمندان', icon: 'bi-arrow-repeat', roles: ['system_admin', 'insurer_admin'] }
   ]},
   { section: 'کمیسیون پزشکی', items: [
     { name: 'commission-cases', title: 'پرونده‌های کمیسیون', icon: 'bi-clipboard2-pulse' },
