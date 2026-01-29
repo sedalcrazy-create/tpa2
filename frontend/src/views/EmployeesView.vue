@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
-import axios from 'axios'
+import api from '@/services/api'
 
 interface Employee {
   id: number
@@ -34,8 +34,6 @@ const currentPage = ref(1)
 const itemsPerPage = 10
 const isLoading = ref(false)
 
-const API_BASE = '/api/v1'
-
 onMounted(() => {
   loadEmployees()
   loadStats()
@@ -44,7 +42,7 @@ onMounted(() => {
 async function loadEmployees() {
   isLoading.value = true
   try {
-    const response = await axios.get(`${API_BASE}/employees`, {
+    const response = await api.get('/employees', {
       params: {
         search: searchTerm.value,
         status: filterStatus.value,
@@ -65,7 +63,7 @@ async function loadEmployees() {
 
 async function loadStats() {
   try {
-    const response = await axios.get(`${API_BASE}/employees/stats`)
+    const response = await api.get('/employees/stats')
     if (response.data.success) {
       stats.value = response.data.data
     }
