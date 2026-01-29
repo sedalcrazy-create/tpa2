@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import axios from 'axios'
 
 interface Employee {
@@ -92,17 +92,16 @@ function getStatusText(status: string): string {
   return texts[status] || status
 }
 
-const filteredEmployees = ref<Employee[]>([])
-$: {
+const filteredEmployees = computed(() => {
   let result = employees.value
 
   // Filter by search term
   if (searchTerm.value) {
     result = result.filter(emp =>
-      emp.firstName.includes(searchTerm.value) ||
-      emp.lastName.includes(searchTerm.value) ||
-      emp.personnelCode.includes(searchTerm.value) ||
-      emp.nationalCode.includes(searchTerm.value)
+      emp.first_name.includes(searchTerm.value) ||
+      emp.last_name.includes(searchTerm.value) ||
+      emp.personnel_code.includes(searchTerm.value) ||
+      emp.national_code.includes(searchTerm.value)
     )
   }
 
@@ -111,14 +110,21 @@ $: {
     result = result.filter(emp => emp.status === filterStatus.value)
   }
 
-  filteredEmployees.value = result
-}
+  return result
+})
 
-const paginatedEmployees = ref<Employee[]>([])
-$: paginatedEmployees.value = filteredEmployees.value.slice(
-  (currentPage.value - 1) * itemsPerPage,
-  currentPage.value * itemsPerPage
-)
+const paginatedEmployees = computed(() => {
+  return filteredEmployees.value.slice(
+    (currentPage.value - 1) * itemsPerPage,
+    currentPage.value * itemsPerPage
+  )
+})
+
+// Watch for search/filter changes and reload from API
+watch([searchTerm, filterStatus], () => {
+  currentPage.value = 1
+  loadEmployees()
+})
 </script>
 
 <template>
@@ -166,7 +172,7 @@ $: paginatedEmployees.value = filteredEmployees.value.slice(
         </div>
         <div class="stat-content">
           <div class="stat-label">کل کارمندان</div>
-          <div class="stat-value">{{ employees.filter(e => !e.parentId).length.toLocaleString('fa-IR') }}</div>
+          <div class="stat-value">{{ stats.total.toLocaleString('fa-IR') }}</div>
         </div>
       </div>
 
@@ -176,7 +182,7 @@ $: paginatedEmployees.value = filteredEmployees.value.slice(
         </div>
         <div class="stat-content">
           <div class="stat-label">کارمندان فعال</div>
-          <div class="stat-value">{{ employees.filter(e => !e.parentId && e.status === 'active').length.toLocaleString('fa-IR') }}</div>
+          <div class="stat-value">{{ stats.active.toLocaleString('fa-IR') }}</div>
         </div>
       </div>
 
@@ -186,7 +192,7 @@ $: paginatedEmployees.value = filteredEmployees.value.slice(
         </div>
         <div class="stat-content">
           <div class="stat-label">افراد تحت تکفل</div>
-          <div class="stat-value">{{ employees.filter(e => e.parentId).length.toLocaleString('fa-IR') }}</div>
+          <div class="stat-value">{{ stats.family_members.toLocaleString('fa-IR') }}</div>
         </div>
       </div>
 
@@ -196,7 +202,7 @@ $: paginatedEmployees.value = filteredEmployees.value.slice(
         </div>
         <div class="stat-content">
           <div class="stat-label">بازنشستگان</div>
-          <div class="stat-value">{{ employees.filter(e => e.status === 'retired').length.toLocaleString('fa-IR') }}</div>
+          <div class="stat-value">{{ stats.retired.toLocaleString('fa-IR') }}</div>
         </div>
       </div>
     </div>
@@ -229,23 +235,23 @@ $: paginatedEmployees.value = filteredEmployees.value.slice(
             </tr>
             <tr v-else v-for="employee in paginatedEmployees" :key="employee.id">
               <td>
-                <span class="code-badge">{{ employee.personnelCode }}</span>
+                <span class="code-badge">{{ employee.personnel_code }}</span>
               </td>
               <td>
-                <span class="national-code">{{ employee.nationalCode }}</span>
+                <span class="national-code">{{ employee.national_code }}</span>
               </td>
               <td>
                 <div class="employee-info">
-                  <span class="employee-name">{{ employee.firstName }} {{ employee.lastName }}</span>
-                  <span v-if="employee.parentId" class="family-badge">
+                  <span class="employee-name">{{ employee.first_name }} {{ employee.last_name }}</span>
+                  <span v-if="employee.parent_id" class="family-badge">
                     <i class="bi bi-link-45deg"></i>
                     تبعی
                   </span>
                 </div>
               </td>
               <td>
-                <span v-if="employee.relationType" class="relation-badge">
-                  {{ employee.relationType }}
+                <span v-if="employee.relation_type" class="relation-badge">
+                  {{ employee.relation_type }}
                 </span>
                 <span v-else class="relation-badge main">
                   کارمند اصلی
