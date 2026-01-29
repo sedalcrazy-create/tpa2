@@ -63,46 +63,41 @@ const pageTitle = computed(() => {
 
 const menuItems = [
   { section: 'منوی اصلی', items: [
-    { name: 'dashboard', title: 'داشبورد', icon: 'bi-grid-1x2' }
+    { name: 'dashboard', title: 'داشبورد', icon: '🏠' }
   ]},
   { section: 'عملیات اسناد', items: [
-    { name: 'claims', title: 'ادعاهای درمانی', icon: 'bi-file-earmark-medical' },
-    { name: 'packages', title: 'بسته‌های اسناد', icon: 'bi-box-seam' },
-    { name: 'prescriptions', title: 'نسخه‌های پزشکی', icon: 'bi-prescription2' }
+    { name: 'claims', title: 'ادعاهای درمانی', icon: '🏥' },
+    { name: 'packages', title: 'بسته‌های اسناد', icon: '📦' },
+    { name: 'prescriptions', title: 'نسخه‌های پزشکی', icon: '💊' }
   ]},
   { section: 'مراکز و مالی', items: [
-    { name: 'centers', title: 'مراکز درمانی', icon: 'bi-hospital' },
-    { name: 'settlements', title: 'تسویه حساب', icon: 'bi-cash-stack' }
+    { name: 'centers', title: 'مراکز درمانی', icon: '🏥' },
+    { name: 'settlements', title: 'تسویه حساب', icon: '💰' }
   ]},
   { section: 'اطلاعات پایه', items: [
-    { name: 'drugs', title: 'بانک دارویی', icon: 'bi-capsule' },
-    { name: 'services', title: 'خدمات درمانی', icon: 'bi-hospital' },
-    { name: 'doctors', title: 'پزشکان', icon: 'bi-person-badge' },
-    { name: 'employees', title: 'کارمندان', icon: 'bi-people' },
-    { name: 'insured-persons', title: 'بیمه‌شدگان', icon: 'bi-person-vcard' },
-    { name: 'diagnoses', title: 'تشخیص‌ها (ICD-10)', icon: 'bi-clipboard2-pulse' },
-    { name: 'provinces', title: 'استان‌ها', icon: 'bi-geo-alt' },
-    { name: 'price-conditions', title: 'شرایط قیمت‌گذاری', icon: 'bi-calculator' },
-    { name: 'insurance-rules', title: 'قوانین بیمه', icon: 'bi-shield-check' },
-    { name: 'contracts', title: 'قراردادها', icon: 'bi-file-earmark-text' },
-    { name: 'employee-sync', title: 'به‌روزرسانی کارمندان', icon: 'bi-arrow-repeat', roles: ['system_admin', 'insurer_admin'] }
+    { name: 'price-conditions', title: 'شرایط قیمت‌گذاری', icon: '💰' },
+    { name: 'insurance-rules', title: 'قوانین بیمه', icon: '🛡️' },
+    { name: 'contracts', title: 'قراردادها', icon: '📄' },
+    { name: 'prescriptions', title: 'نسخه‌ها', icon: '💊' },
+    { name: 'employee-sync', title: 'به‌روزرسانی کارمندان', icon: '🔄', roles: ['system_admin', 'insurer_admin'] }
   ]},
   { section: 'کمیسیون پزشکی', items: [
-    { name: 'commission-cases', title: 'پرونده‌های کمیسیون', icon: 'bi-clipboard2-pulse' },
-    { name: 'case-types', title: 'انواع پرونده', icon: 'bi-list-check', roles: ['system_admin'] },
-    { name: 'verdict-templates', title: 'قالب آرا', icon: 'bi-file-earmark-text', roles: ['system_admin'] }
+    { name: 'commission-cases', title: 'پرونده‌های کمیسیون', icon: '📋' },
+    { name: 'insured-persons', title: 'بیمه‌شدگان', icon: '👥' },
+    { name: 'case-types', title: 'انواع پرونده', icon: '📑', roles: ['system_admin'] },
+    { name: 'verdict-templates', title: 'قالب آرا', icon: '📝', roles: ['system_admin'] }
   ]},
   { section: 'مددکاری', items: [
-    { name: 'social-work-list', title: 'پرونده‌های مددکاری', icon: 'bi-heart-pulse' },
-    { name: 'social-work-create', title: 'ایجاد پرونده جدید', icon: 'bi-plus-circle' }
+    { name: 'social-work-list', title: 'پرونده‌های مددکاری', icon: '❤️' },
+    { name: 'social-work-create', title: 'ایجاد پرونده جدید', icon: '➕' }
   ]},
   { section: 'گزارشات', items: [
-    { name: 'members', title: 'استعلام بیمه‌شده', icon: 'bi-search' },
-    { name: 'reports', title: 'گزارشات', icon: 'bi-bar-chart-line' }
+    { name: 'members', title: 'استعلام بیمه‌شده', icon: '🔍' },
+    { name: 'reports', title: 'گزارشات', icon: '📊' }
   ]},
   { section: 'مدیریت', items: [
-    { name: 'users', title: 'کاربران', icon: 'bi-person-gear', roles: ['system_admin', 'insurer_admin'] },
-    { name: 'settings', title: 'تنظیمات', icon: 'bi-gear', roles: ['system_admin', 'insurer_admin'] }
+    { name: 'users', title: 'کاربران', icon: '👤', roles: ['system_admin', 'insurer_admin'] },
+    { name: 'settings', title: 'تنظیمات', icon: '⚙️', roles: ['system_admin', 'insurer_admin'] }
   ]}
 ]
 
@@ -141,7 +136,7 @@ async function handleLogout() {
                 class="nav-link"
                 :class="{ active: route.name === item.name }"
               >
-                <i :class="['bi', item.icon]"></i>
+                <span class="nav-icon">{{ item.icon }}</span>
                 <span>{{ item.title }}</span>
               </RouterLink>
             </div>
