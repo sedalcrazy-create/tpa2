@@ -187,3 +187,64 @@ const (
 	DischargeTransferred     DischargeCondition = 4 // انتقالی
 	DischargeDeceased        DischargeCondition = 5 // فوت شده
 )
+
+// RoleName - نام نقش
+type RoleName string
+
+const (
+	RoleSystemAdmin    RoleName = "system_admin"
+	RoleInsurerAdmin   RoleName = "insurer_admin"
+	RoleSupervisor     RoleName = "supervisor"
+	RoleClaimExaminer  RoleName = "claim_examiner"
+	RoleDrugExaminer   RoleName = "drug_examiner"
+	RoleFinancialOfficer RoleName = "financial_officer"
+	RoleCenterUser     RoleName = "center_user"
+	RoleReportViewer   RoleName = "report_viewer"
+)
+
+// PermissionName - نام مجوز
+type PermissionName string
+
+const (
+	// Claims
+	PermClaimCreate  PermissionName = "claim.create"
+	PermClaimRead    PermissionName = "claim.read"
+	PermClaimUpdate  PermissionName = "claim.update"
+	PermClaimDelete  PermissionName = "claim.delete"
+	PermClaimExamine PermissionName = "claim.examine"
+	PermClaimApprove PermissionName = "claim.approve"
+	PermClaimReject  PermissionName = "claim.reject"
+
+	// Packages
+	PermPackageCreate  PermissionName = "package.create"
+	PermPackageRead    PermissionName = "package.read"
+	PermPackageUpdate  PermissionName = "package.update"
+	PermPackageDelete  PermissionName = "package.delete"
+	PermPackageExamine PermissionName = "package.examine"
+	PermPackageApprove PermissionName = "package.approve"
+
+	// Centers
+	PermCenterCreate PermissionName = "center.create"
+	PermCenterRead   PermissionName = "center.read"
+	PermCenterUpdate PermissionName = "center.update"
+	PermCenterDelete PermissionName = "center.delete"
+
+	// Settlements
+	PermSettlementCreate  PermissionName = "settlement.create"
+	PermSettlementRead    PermissionName = "settlement.read"
+	PermSettlementApprove PermissionName = "settlement.approve"
+
+	// Users
+	PermUserCreate PermissionName = "user.create"
+	PermUserRead   PermissionName = "user.read"
+	PermUserUpdate PermissionName = "user.update"
+	PermUserDelete PermissionName = "user.delete"
+
+	// Reports
+	PermReportView   PermissionName = "report.view"
+	PermReportExport PermissionName = "report.export"
+
+	// Settings
+	PermSettingsRead   PermissionName = "settings.read"
+	PermSettingsUpdate PermissionName = "settings.update"
+)
