@@ -34,14 +34,15 @@ func main() {
 	defer db.Close()
 
 	// Run migrations
-	if err := db.AutoMigrate(); err != nil {
-		log.Fatalf("Failed to run migrations: %v", err)
-	}
+	// TEMPORARILY DISABLED for testing with mock data
+	// if err := db.AutoMigrate(); err != nil {
+	// 	log.Fatalf("Failed to run migrations: %v", err)
+	// }
 
 	// Seed initial data
-	if err := db.Seed(); err != nil {
-		log.Printf("Warning: Failed to seed data: %v", err)
-	}
+	// if err := db.Seed(); err != nil {
+	// 	log.Printf("Warning: Failed to seed data: %v", err)
+	// }
 
 	// Create Fiber app
 	app := fiber.New(fiber.Config{
