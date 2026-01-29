@@ -23,7 +23,8 @@ type PreAuth struct {
 	Tenant       *Insurer `gorm:"foreignKey:TenantID" json:"tenant,omitempty"`
 	Person       *Person  `gorm:"foreignKey:PersonID" json:"person,omitempty"`
 	RegisterUser *User    `gorm:"foreignKey:RegisterUserID" json:"register_user,omitempty"`
-	Claim        *Claim   `gorm:"foreignKey:ClaimID" json:"claim,omitempty"`
+	// Claim relation loaded manually to avoid circular dependency (Claim also references PreAuth)
+	Claim        *Claim   `gorm:"-" json:"claim,omitempty"`
 }
 
 // TableName specifies the table name for PreAuth
