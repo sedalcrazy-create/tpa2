@@ -109,6 +109,16 @@ type ClaimItem struct {
 	Drug      *Drug    `gorm:"foreignKey:DrugID" json:"drug,omitempty"`
 	ServiceID *uint    `json:"service_id"`
 	Service   *Service `gorm:"foreignKey:ServiceID" json:"service,omitempty"`
+	ItemID    *uint    `json:"item_id"` // Universal Item reference (new)
+	Item      *Item    `gorm:"foreignKey:ItemID" json:"item,omitempty"`
+
+	// Prescription reference (NEW)
+	PrescriptionItemID *uint             `json:"prescription_item_id"` // ارجاع به قلم نسخه
+	PrescriptionItem   *PrescriptionItem `gorm:"foreignKey:PrescriptionItemID" json:"prescription_item,omitempty"`
+
+	// Instruction reference (NEW)
+	InstructionID *uint        `json:"instruction_id"` // دستور مصرف
+	Instruction   *Instruction `gorm:"foreignKey:InstructionID" json:"instruction,omitempty"`
 
 	// اطلاعات از مدرک
 	DocItemCode  string `gorm:"size:50" json:"doc_item_code"`   // کد روی مدرک
@@ -118,6 +128,11 @@ type ClaimItem struct {
 	// تعداد و مقدار
 	Count       int `json:"count"`        // تعداد تایید شده
 	BatchNumber int `json:"batch_number"` // شماره بچ
+
+	// Usage instructions (NEW)
+	Dosage    *string `gorm:"size:100" json:"dosage"`    // دوز
+	Frequency *string `gorm:"size:100" json:"frequency"` // دفعات
+	Duration  *string `gorm:"size:100" json:"duration"`  // مدت
 
 	// تاریخ
 	StartDate *time.Time `json:"start_date"`
@@ -137,6 +152,10 @@ type ClaimItem struct {
 	LeftEyeDiopter *float32 `json:"left_eye_diopter"` // دیوپتر چشم چپ
 	RightEyeDiopter *float32 `json:"right_eye_diopter"` // دیوپتر چشم راست
 
+	// Body site reference (NEW - direct reference)
+	BodySiteID *uint     `json:"body_site_id"` // محل انجام خدمت
+	BodySite   *BodySite `gorm:"foreignKey:BodySiteID" json:"body_site,omitempty"`
+
 	// ارائه‌دهنده
 	ProviderID *uint     `json:"provider_id"`
 	Provider   *Provider `gorm:"foreignKey:ProviderID" json:"provider,omitempty"`
@@ -146,7 +165,7 @@ type ClaimItem struct {
 	Parent   *ClaimItem `gorm:"foreignKey:ParentID" json:"parent,omitempty"`
 
 	// Relations
-	BodySites   []ClaimItemBodySite   `json:"body_sites,omitempty"`
+	BodySites   []ClaimItemBodySite   `json:"body_sites,omitempty"` // Multiple body sites (legacy)
 	ReasonCodes []ClaimItemReasonCode `json:"reason_codes,omitempty"`
 }
 
@@ -260,14 +279,38 @@ type DiagnosisGroup struct {
 	IsActive bool   `gorm:"default:true" json:"is_active"`
 }
 
-// BodySite - عضو بدن
+// BodySite - عضو بدن (anatomical body sites)
 type BodySite struct {
 	BaseModel
 
-	Code    string `gorm:"size:20" json:"code"`
-	TitleFa string `gorm:"size:200" json:"title_fa"`
+	Code    string `gorm:"size:20;uniqueIndex" json:"code"` // Unique code
+	TitleFa string `gorm:"size:200;index" json:"title_fa"`
 	TitleEn string `gorm:"size:200" json:"title_en"`
 
+	// Hierarchy (NEW)
+	ParentID *uint      `gorm:"index" json:"parent_id"`
+	Parent   *BodySite  `gorm:"foreignKey:ParentID" json:"parent,omitempty"`
+	Children []BodySite `gorm:"foreignKey:ParentID" json:"children,omitempty"`
+
+	// Category (NEW)
+	Category string `gorm:"size:50;index" json:"category"` // HEAD, TRUNK, UPPER_LIMB, LOWER_LIMB, etc.
+
+	// Laterality (NEW)
+	Side string `gorm:"size:10" json:"side"` // LEFT, RIGHT, BILATERAL, NONE
+
+	// Medical codes (NEW)
+	ICD10Code   *string `gorm:"size:20;index" json:"icd10_code"`  // ICD-10 anatomical code
+	SNOMEDCode  *string `gorm:"size:20;index" json:"snomed_code"` // SNOMED CT code
+	CPTModifier *string `gorm:"size:10" json:"cpt_modifier"`      // CPT modifier for laterality
+
+	// Description (NEW)
+	Description string `gorm:"type:text" json:"description"`
+
+	// Status (NEW)
+	IsActive  bool `gorm:"default:true;index" json:"is_active"`
+	SortOrder int  `gorm:"default:0" json:"sort_order"`
+
+	// Legacy group reference
 	GroupID *uint          `json:"group_id"`
 	Group   *BodySiteGroup `gorm:"foreignKey:GroupID" json:"group,omitempty"`
 }

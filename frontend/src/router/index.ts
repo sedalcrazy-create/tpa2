@@ -110,6 +110,30 @@ const router = createRouter({
           path: 'social-work/:id',
           name: 'social-work-detail',
           component: () => import('@/views/SocialWorkDetailView.vue')
+        },
+        // New TPA Module Routes
+        {
+          path: 'price-conditions',
+          name: 'price-conditions',
+          component: () => import('@/views/ItemPriceConditionsView.vue'),
+          meta: { roles: ['system_admin', 'insurer_admin'] }
+        },
+        {
+          path: 'prescriptions',
+          name: 'prescriptions',
+          component: () => import('@/views/PrescriptionsView.vue')
+        },
+        {
+          path: 'insurance-rules',
+          name: 'insurance-rules',
+          component: () => import('@/views/InsuranceRulesView.vue'),
+          meta: { roles: ['system_admin', 'insurer_admin'] }
+        },
+        {
+          path: 'contracts',
+          name: 'contracts',
+          component: () => import('@/views/ContractsView.vue'),
+          meta: { roles: ['system_admin', 'insurer_admin'] }
         }
       ]
     },
