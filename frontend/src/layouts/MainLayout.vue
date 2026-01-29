@@ -76,10 +76,10 @@ const menuItems = [
   ]},
   { section: 'اطلاعات پایه', items: [
     { name: 'employees', title: 'کارمندان', icon: '👥' },
+    { name: 'employee-sync', title: 'به‌روزرسانی کارمندان', icon: '🔄' },
     { name: 'price-conditions', title: 'شرایط قیمت‌گذاری', icon: '💰' },
     { name: 'insurance-rules', title: 'قوانین بیمه', icon: '🛡️' },
-    { name: 'contracts', title: 'قراردادها', icon: '📄' },
-    { name: 'employee-sync', title: 'به‌روزرسانی کارمندان', icon: '🔄', roles: ['system_admin', 'insurer_admin'] }
+    { name: 'contracts', title: 'قراردادها', icon: '📄' }
   ]},
   { section: 'کمیسیون پزشکی', items: [
     { name: 'commission-cases', title: 'پرونده‌های کمیسیون', icon: '📋' },
