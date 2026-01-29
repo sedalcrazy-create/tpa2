@@ -20,17 +20,13 @@ const pageTitle = computed(() => {
     dashboard: 'داشبورد',
     claims: 'مدیریت ادعاها',
     packages: 'بسته‌های اسناد',
+    prescriptions: 'نسخه‌های پزشکی',
     centers: 'مراکز درمانی',
     settlements: 'تسویه حساب',
     members: 'استعلام بیمه‌شدگان',
     reports: 'گزارشات',
     users: 'مدیریت کاربران',
     settings: 'تنظیمات',
-    // Pricing & Rules
-    'price-conditions': 'شرایط قیمت‌گذاری',
-    'prescriptions': 'نسخه‌های پزشکی',
-    'insurance-rules': 'قوانین بیمه',
-    'contracts': 'قراردادها',
     // Commission
     'commission-cases': 'پرونده‌های کمیسیون',
     'commission-case-detail': 'جزئیات پرونده کمیسیون',
@@ -41,8 +37,26 @@ const pageTitle = computed(() => {
     'social-work-list': 'پرونده‌های مددکاری',
     'social-work-create': 'ایجاد پرونده مددکاری',
     'social-work-detail': 'جزئیات پرونده مددکاری',
-    // Base Data
-    'employee-sync': 'به‌روزرسانی کارمندان'
+    // Base Data - Drugs & Services
+    'drugs': 'بانک دارویی',
+    'services': 'خدمات درمانی',
+    'drug-prices': 'قیمت دارو',
+    'service-prices': 'قیمت خدمات',
+    // Base Data - Centers & Contracts
+    'doctors': 'پزشکان',
+    'contracts': 'قراردادها',
+    // Base Data - Pricing & Rules
+    'price-conditions': 'شرایط قیمت‌گذاری',
+    'insurance-rules': 'قوانین بیمه',
+    'tariffs': 'تعرفه‌ها',
+    // Base Data - Personnel
+    'employees': 'کارمندان',
+    'employee-sync': 'به‌روزرسانی کارمندان',
+    // Base Data - Geographic
+    'provinces': 'استان‌ها',
+    'cities': 'شهرها',
+    // Base Data - Medical
+    'diagnoses': 'تشخیص‌ها (ICD-10)'
   }
   return titles[route.name as string] || 'داشبورد'
 })
@@ -53,18 +67,38 @@ const menuItems = [
   ]},
   { section: 'عملیات اسناد', items: [
     { name: 'claims', title: 'ادعاهای درمانی', icon: 'bi-file-earmark-medical' },
-    { name: 'packages', title: 'بسته‌های اسناد', icon: 'bi-box-seam' }
+    { name: 'packages', title: 'بسته‌های اسناد', icon: 'bi-box-seam' },
+    { name: 'prescriptions', title: 'نسخه‌های پزشکی', icon: 'bi-prescription2' }
   ]},
   { section: 'مراکز و مالی', items: [
     { name: 'centers', title: 'مراکز درمانی', icon: 'bi-hospital' },
     { name: 'settlements', title: 'تسویه حساب', icon: 'bi-cash-stack' }
   ]},
-  { section: 'اطلاعات پایه', items: [
+  { section: 'اطلاعات پایه - دارو و خدمات', items: [
+    { name: 'drugs', title: 'بانک دارویی', icon: 'bi-capsule' },
+    { name: 'services', title: 'خدمات درمانی', icon: 'bi-hospital' },
+    { name: 'drug-prices', title: 'قیمت دارو', icon: 'bi-currency-dollar' },
+    { name: 'service-prices', title: 'قیمت خدمات', icon: 'bi-cash-coin' }
+  ]},
+  { section: 'اطلاعات پایه - مراکز', items: [
+    { name: 'doctors', title: 'پزشکان', icon: 'bi-person-badge' },
+    { name: 'contracts', title: 'قراردادها', icon: 'bi-file-earmark-text' }
+  ]},
+  { section: 'اطلاعات پایه - قیمت‌گذاری', items: [
     { name: 'price-conditions', title: 'شرایط قیمت‌گذاری', icon: 'bi-calculator' },
     { name: 'insurance-rules', title: 'قوانین بیمه', icon: 'bi-shield-check' },
-    { name: 'contracts', title: 'قراردادها', icon: 'bi-file-earmark-text' },
-    { name: 'prescriptions', title: 'نسخه‌های پزشکی', icon: 'bi-prescription2' },
-    { name: 'employee-sync', title: 'به‌روزرسانی کارمندان', icon: 'bi-arrow-repeat', roles: ['system_admin', 'insurer_admin'] }
+    { name: 'tariffs', title: 'تعرفه‌ها', icon: 'bi-tag' }
+  ]},
+  { section: 'اطلاعات پایه - پرسنل', items: [
+    { name: 'employees', title: 'کارمندان', icon: 'bi-people' },
+    { name: 'employee-sync', title: 'به‌روزرسانی', icon: 'bi-arrow-repeat', roles: ['system_admin', 'insurer_admin'] }
+  ]},
+  { section: 'اطلاعات پایه - جغرافیایی', items: [
+    { name: 'provinces', title: 'استان‌ها', icon: 'bi-geo-alt' },
+    { name: 'cities', title: 'شهرها', icon: 'bi-pin-map' }
+  ]},
+  { section: 'اطلاعات پایه - پزشکی', items: [
+    { name: 'diagnoses', title: 'تشخیص‌ها', icon: 'bi-clipboard2-pulse' }
   ]},
   { section: 'کمیسیون پزشکی', items: [
     { name: 'commission-cases', title: 'پرونده‌های کمیسیون', icon: 'bi-clipboard2-pulse' },
