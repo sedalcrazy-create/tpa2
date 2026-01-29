@@ -3,8 +3,8 @@ package handler
 import (
 	"encoding/csv"
 	"fmt"
-	"io"
 	"path/filepath"
+	"strconv"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -160,8 +160,8 @@ func (h *EmployeeImportHandler) SyncFromHR(c *fiber.Ctx) error {
 // GetImportHistory - تاریخچه import ها
 // GET /api/v1/employees/import/history
 func (h *EmployeeImportHandler) GetImportHistory(c *fiber.Ctx) error {
-	page, _ := c.QueryInt("page", 1)
-	limit, _ := c.QueryInt("limit", 10)
+	page, _ := strconv.Atoi(c.Query("page", "1"))
+	limit, _ := strconv.Atoi(c.Query("limit", "10"))
 
 	// Mock data
 	history := []fiber.Map{

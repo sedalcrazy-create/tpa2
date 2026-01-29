@@ -47,8 +47,8 @@ func main() {
 	app := fiber.New(fiber.Config{
 		AppName:       cfg.App.Name,
 		ServerHeader:  "TPA-Server",
-		StrictRouting: true,
-		CaseSensitive: true,
+		StrictRouting: false,
+		CaseSensitive: false,
 		BodyLimit:     50 * 1024 * 1024, // 50MB
 		ErrorHandler:  errorHandler,
 	})
@@ -297,6 +297,7 @@ func setupProtectedRoutes(api fiber.Router, db *database.Database, cfg *config.C
 	employeeHandler := handler.NewEmployeeHandler()
 	importHandler := handler.NewEmployeeImportHandler()
 
+	log.Println("Setting up employee routes...")
 	employees := protected.Group("/employees")
 	{
 		// CRUD Operations

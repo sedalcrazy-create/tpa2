@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # TPA Backend API (Go)
+  # TPA Backend API (Go) - Local Development
   tpa-api:
     build:
       context: ./backend-go
@@ -11,24 +11,24 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - APP_NAME=TPA System (Dev)
+      - APP_NAME=TPA System
       - APP_ENV=development
       - APP_PORT=8080
       - APP_DEBUG=true
-      - APP_BASE_URL=http://localhost:8080
+      - APP_BASE_URL=http://localhost:8086/tpa
       - API_PREFIX=/api/v1
       - DB_HOST=postgres
       - DB_PORT=5432
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_NAME=tpa
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-tpa123}
+      - DB_NAME=${DB_NAME:-tpa}
       - DB_SSLMODE=disable
-      - JWT_SECRET=dev-secret-key
+      - JWT_SECRET=${JWT_SECRET:-tpa-secret-key}
       - JWT_ACCESS_EXPIRES=1h
       - JWT_REFRESH_EXPIRES=168h
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - CORS_ORIGINS=http://localhost:5173,http://localhost:8086
+      - CORS_ORIGINS=http://localhost:5174,http://localhost:8086
     depends_on:
       postgres:
         condition: service_healthy
@@ -36,71 +36,30 @@ services:
         condition: service_started
     networks:
       - tpa-network
-
-  # Commission Backend API (NestJS)
-  commission-api:
-    build:
-      context: ./backend-nestjs
-      dockerfile: Dockerfile
-    container_name: commission-api-dev
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=development
-      - PORT=3000
-      - API_PREFIX=api/v1
-      - DB_TYPE=postgres
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=postgres
-      - DB_NAME=tpa
-      - JWT_SECRET=dev-secret-key
-      - JWT_EXPIRATION=1h
-      - JWT_REFRESH_SECRET=dev-secret-key-refresh
-      - JWT_REFRESH_EXPIRATION=7d
-      - CORS_ORIGIN=http://localhost:5173,http://localhost:8086
-    volumes:
-      - commission_uploads:/app/uploads
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - tpa-network
-
-  # Frontend (Vue.js)
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: frontend-dev
-    restart: unless-stopped
-    ports:
-      - "8086:80"
-    depends_on:
-      - tpa-api
-      - commission-api
-    networks:
-      - tpa-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   # Database (PostgreSQL)
   postgres:
     image: postgres:16-alpine
-    container_name: postgres-dev
+    container_name: tpa-postgres-dev
     restart: unless-stopped
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=tpa
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-tpa123}
+      - POSTGRES_DB=${DB_NAME:-tpa}
     volumes:
       - postgres_data_dev:/var/lib/postgresql/data
     networks:
       - tpa-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d tpa"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-tpa}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -108,7 +67,7 @@ services:
   # Redis
   redis:
     image: redis:7-alpine
-    container_name: redis-dev
+    container_name: tpa-redis-dev
     restart: unless-stopped
     ports:
       - "6379:6379"
@@ -121,7 +80,6 @@ services:
 volumes:
   postgres_data_dev:
   redis_data_dev:
-  commission_uploads:
 
 networks:
   tpa-network:

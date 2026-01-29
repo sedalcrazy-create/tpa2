@@ -19,8 +19,8 @@ func NewEmployeeHandler() *EmployeeHandler {
 // GET /api/v1/employees
 func (h *EmployeeHandler) GetEmployees(c *fiber.Ctx) error {
 	// Query parameters
-	search := c.Query("search", "")
-	status := c.Query("status", "all")
+	_ = c.Query("search", "")     // TODO: implement search
+	_ = c.Query("status", "all")  // TODO: implement status filter
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 	limit, _ := strconv.Atoi(c.Query("limit", "10"))
 
@@ -86,7 +86,7 @@ func (h *EmployeeHandler) GetEmployees(c *fiber.Ctx) error {
 // GetEmployee - جزئیات یک کارمند
 // GET /api/v1/employees/:id
 func (h *EmployeeHandler) GetEmployee(c *fiber.Ctx) error {
-	id := c.Params("id")
+	_ = c.Params("id") // TODO: use id to fetch from database
 
 	employee := fiber.Map{
 		"id":               1,
@@ -147,7 +147,7 @@ func (h *EmployeeHandler) CreateEmployee(c *fiber.Ctx) error {
 // UpdateEmployee - ویرایش کارمند
 // PUT /api/v1/employees/:id
 func (h *EmployeeHandler) UpdateEmployee(c *fiber.Ctx) error {
-	id := c.Params("id")
+	_ = c.Params("id") // TODO: use id to update in database
 	var req entity.Employee
 
 	if err := c.BodyParser(&req); err != nil {
@@ -168,7 +168,7 @@ func (h *EmployeeHandler) UpdateEmployee(c *fiber.Ctx) error {
 // DeleteEmployee - حذف (soft delete) کارمند
 // DELETE /api/v1/employees/:id
 func (h *EmployeeHandler) DeleteEmployee(c *fiber.Ctx) error {
-	id := c.Params("id")
+	_ = c.Params("id") // TODO: use id to delete from database
 
 	// TODO: Soft delete in database
 
@@ -181,7 +181,7 @@ func (h *EmployeeHandler) DeleteEmployee(c *fiber.Ctx) error {
 // AutoCompleteLookup - جستجوی autocomplete کارمندان
 // GET /api/v1/employees/autocomplete
 func (h *EmployeeHandler) AutoCompleteLookup(c *fiber.Ctx) error {
-	q := c.Query("q", "")
+	_ = c.Query("q", "") // TODO: use query to search database
 
 	// Mock results
 	results := []fiber.Map{
