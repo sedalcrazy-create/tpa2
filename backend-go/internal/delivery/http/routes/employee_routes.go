@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"tpa-backend/internal/delivery/http/handler"
+	"github.com/bank-melli/tpa/internal/delivery/http/handler"
 )
 
 func SetupEmployeeRoutes(api fiber.Router) {

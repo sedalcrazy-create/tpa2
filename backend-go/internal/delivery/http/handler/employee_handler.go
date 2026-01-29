@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
-	"tpa-backend/internal/domain/entity"
+	"github.com/bank-melli/tpa/internal/domain/entity"
 )
 
 type EmployeeHandler struct {
